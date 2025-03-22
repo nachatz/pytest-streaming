@@ -15,7 +15,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - uses: jdx/mise-actions@v2
+            - uses: jdx/mise-actions@v1
               with:
                   cache: true
 
