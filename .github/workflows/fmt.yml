@@ -1,0 +1,33 @@
+name: Fmt check
+
+on:
+    push:
+        branches:
+        - main
+    pull_request:
+        branches:
+        - main
+
+jobs:
+    fmt:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - uses: jdx/mise-actions@v2
+              with:
+                  cache: true
+
+            - name: Dependency cache
+              id: cache
+              uses: actions/cache@v2
+              with:
+                path: .venv
+                key: ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
+                restore-keys: |
+                  ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
+
+            - name: Run fmt
+              run: |
+                just fmt

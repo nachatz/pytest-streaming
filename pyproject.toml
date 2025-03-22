@@ -1,0 +1,20 @@
+[project]
+name = "pytest-pubsub"
+version = "0.1.0"
+description = "Plugin for testing pubsub systems with pytest"
+authors = [{ name = "Nikolas Achatz" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.9",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.25.3",
+    "pytest-cov>=6.0.0",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.11.2",
+]

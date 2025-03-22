@@ -1,0 +1,30 @@
+name: Docs build
+
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+    build-docs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - uses: jdx/mise-actions@v2
+              with:
+                  cache: true
+
+            - name: Dependency cache
+              id: cache
+              uses: actions/cache@v2
+              with:
+                path: .venv
+                key: ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
+                restore-keys: |
+                  ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
+
+            - name: Build and deploy docs
+              run: |
+                uv run mkdocs gh-deploy
