@@ -1,20 +1,40 @@
+[project.urls]
+Repository = "https://github.com/nachatz/pytest-pubsub"
+
 [project]
 name = "pytest-pubsub"
 version = "0.1.0"
-description = "Plugin for testing pubsub systems with pytest"
-authors = [{ name = "Nikolas Achatz" }]
+description = "Plugin for testing pubsub systems with pytest locally and in ci/cd"
 readme = "README.md"
+authors = [{ name = "Nikolas Achatz", email = "nil@gmail.com" }]
+maintainers = [{ name = "Nikolas Achatz", email = "nil@gmail.com" }]
+license = {file = "LICENSE"}
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "google-cloud-pubsub>=2.29.0",
+    "pytest>=8.3.5",
+    "types-protobuf>=5.29.1.20250315",
+]
+
+[tool.setuptools.packages.find]
+where = ["pytest_pubsub"]
 
 [dependency-groups]
 dev = [
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.6.9",
     "mypy>=1.15.0",
-    "pytest>=8.3.5",
     "pytest-asyncio>=0.25.3",
     "pytest-cov>=6.0.0",
     "pytest-mock>=3.14.0",
     "ruff>=0.11.2",
 ]
+
+[project.entry-points.pytest11]
+pytest_pubsub = "pytest_pubsub.plugin"
+
+[build-system]
+requires = [
+  "setuptools>=61.0.0",
+]
+build-backend = "setuptools.build_meta"
