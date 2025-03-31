@@ -10,11 +10,14 @@ compose:
     docker compose up -d
 
 fmt:
-    uv run ruff format --check
+    uv run ruff format
     uv run ruff check
 
 mypy:
     uv run mypy --strict .
+
+test:
+    uv run pytest tests
 
 docs:
     uv run mkdocs serve
