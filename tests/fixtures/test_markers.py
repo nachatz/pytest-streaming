@@ -1,10 +1,10 @@
 from pytest import Pytester
-from tests.enums import ProjectIds
+
 from pytest_pubsub.pubsub.publisher import GCPPublisher
+from tests.enums import ProjectIds
 
 
 class TestMarkers:
-
     def test_pubsub_marker_topic_creation_base(self, pytester: Pytester) -> None:
         pytester.copy_example("test_marker_topics_only.py")
         result = pytester.runpytest("-k", "test_pubsub_marker_topic_creation_base")

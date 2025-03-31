@@ -1,7 +1,6 @@
 import pytest
-
-from pytest import FixtureRequest
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
+from pytest import FixtureRequest
 
 from pytest_pubsub.config import Defaults
 from tests.enums import ProjectIds
@@ -27,10 +26,7 @@ class TestPubsubMarker:
         assert path_2 in found_topics
         assert project_id == Defaults.PROJECT_ID
 
-    @pytest.mark.pubsub(
-        topics=["test-topic1", "test-topic2"], 
-        project_id=ProjectIds.PYTEST_PUBSUB
-    )
+    @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"], project_id=ProjectIds.PYTEST_PUBSUB)
     def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest) -> None:
         marker = request.node.get_closest_marker("pubsub")
         topics = marker.kwargs["topics"]
@@ -50,9 +46,7 @@ class TestPubsubMarker:
         assert project_id == ProjectIds.PYTEST_PUBSUB
 
     @pytest.mark.pubsub(
-        topics=["test-topic1", "test-topic2"], 
-        delete_after=True, 
-        project_id=ProjectIds.PYTEST_PUBSUB_DELETE
+        topics=["test-topic1", "test-topic2"], delete_after=True, project_id=ProjectIds.PYTEST_PUBSUB_DELETE
     )
     def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest) -> None:
         marker = request.node.get_closest_marker("pubsub")

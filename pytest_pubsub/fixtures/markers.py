@@ -1,10 +1,11 @@
 from contextlib import contextmanager
-
-from pytest import FixtureRequest, Config
 from typing import Generator
 
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest import Config
+from pytest import FixtureRequest
+
 from pytest_pubsub.config import Configuration
+from pytest_pubsub.pubsub.publisher import GCPPublisher
 
 
 @contextmanager

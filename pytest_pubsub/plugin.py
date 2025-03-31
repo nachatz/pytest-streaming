@@ -1,11 +1,18 @@
-import pytest
-
 from contextlib import ExitStack
 from typing import Generator
-from pytest import Config, FixtureRequest, Parser, OptionGroup, Session
-from pytest_pubsub.pubsub.publisher import GCPPublisher
-from pytest_pubsub.config import Configuration, Defaults, MarkerConfiguration
+
+import pytest
+from pytest import Config
+from pytest import FixtureRequest
+from pytest import OptionGroup
+from pytest import Parser
+from pytest import Session
+
+from pytest_pubsub.config import Configuration
+from pytest_pubsub.config import Defaults
+from pytest_pubsub.config import MarkerConfiguration
 from pytest_pubsub.fixtures.markers import pubsub_setup_marker
+from pytest_pubsub.pubsub.publisher import GCPPublisher
 
 
 def pytest_addoption(parser: Parser) -> None:

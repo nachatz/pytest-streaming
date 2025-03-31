@@ -1,4 +1,5 @@
 from enum import StrEnum
+
 from pytest_pubsub.config import Defaults
 
 
