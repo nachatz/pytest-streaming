@@ -1,4 +1,4 @@
-import pytest
+from contextlib import contextmanager
 
 from pytest import FixtureRequest, Config
 from typing import Generator
@@ -7,8 +7,8 @@ from pytest_pubsub.pubsub.publisher import GCPPublisher
 from pytest_pubsub.config import Configuration
 
 
-@pytest.fixture(autouse=True)
-def _pubsub_setup(request: FixtureRequest, pytestconfig: Config) -> Generator[None, None, None]:
+@contextmanager
+def pubsub_setup_marker(request: FixtureRequest, pytestconfig: Config) -> Generator[None, None, None]:
     """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker.
 
     Args:

@@ -1,6 +1,10 @@
-from pytest import Config, Parser, OptionGroup, Session
+from contextlib import ExitStack
+from typing import Generator
+from pytest import Config, FixtureRequest, Parser, OptionGroup, Session
+import pytest
 from pytest_pubsub.pubsub.publisher import GCPPublisher
-from pytest_pubsub.config import Configuration, MarkerConfiguration
+from pytest_pubsub.config import Configuration, Defaults, MarkerConfiguration
+from pytest_pubsub.fixtures.markers import pubsub_setup_marker
 
 
 def pytest_addoption(parser: Parser) -> None:
@@ -32,7 +36,7 @@ def pytest_addoption(parser: Parser) -> None:
         Configuration.PROJECT_ID,
         "GCP project ID to use for Pub/Sub topics (local only) - default is 'default'",
         type="string",
-        default="default",
+        default=Defaults.PROJECT_ID,
     )
 
     parser.addini(
@@ -61,8 +65,8 @@ def pytest_sessionstart(session: Session) -> None:
     run_pubsub_emulator = config.getini(Configuration.RUN_EMULATOR)
     project_id = config.getini(Configuration.PROJECT_ID)
 
-    if run_pubsub_emulator:
-        pass
+    if run_pubsub_emulator or not global_topics_to_create:
+        return
 
     GCPPublisher().setup_testing_topics(project_id, global_topics_to_create)
 
@@ -84,3 +88,16 @@ def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
         return
 
     GCPPublisher().delete_testing_topics(project_id, global_topics_to_create)
+
+
+@pytest.fixture(autouse=True)
+def _markers(request: FixtureRequest, pytestconfig: Config) -> Generator[None, None, None]:
+    """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker.
+
+    Args:
+        request: pytest fixture request object
+        pytestconfig: pytest config object
+    """
+    with ExitStack() as stack:
+        stack.enter_context(pubsub_setup_marker(request, pytestconfig))
+        yield

@@ -31,6 +31,6 @@ class GCPPublisher(pubsub_v1.PublisherClient):  # type: ignore[misc]
         for topic in topics:
             try:
                 topic_path = self.topic_path(project_id, topic)
-                self.delete_topic(topic_path)
+                self.delete_topic(topic=topic_path)
             except NotFound:
                 pass

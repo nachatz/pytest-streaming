@@ -16,5 +16,8 @@ fmt:
 mypy:
     uv run mypy --strict .
 
+test:
+    uv run pytest tests
+
 docs:
     uv run mkdocs serve

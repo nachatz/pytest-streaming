@@ -8,6 +8,10 @@ class Configuration(StrEnum):
     RUN_EMULATOR = "pytest_pubsub_run_emulator"
 
 
+class Defaults(StrEnum):
+    PROJECT_ID = "default"
+
+
 class MarkerConfiguration(StrEnum):
     """Configuration options for custom markers."""
 
@@ -16,4 +20,5 @@ class MarkerConfiguration(StrEnum):
 
 class HookConfiguration(StrEnum):
     """Configuration options for hooks."""
+
     ...
