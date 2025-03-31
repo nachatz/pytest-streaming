@@ -1,5 +1,5 @@
-from google.cloud import pubsub_v1  # type: ignore[import-untyped]
 from google.api_core.exceptions import NotFound
+from google.cloud import pubsub_v1  # type: ignore[import-untyped]
 
 
 class GCPPublisher(pubsub_v1.PublisherClient):  # type: ignore[misc]

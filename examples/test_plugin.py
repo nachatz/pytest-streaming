@@ -1,4 +1,5 @@
-from google.cloud.pubsub_v1 import PublisherClient # type: ignore[import-untyped]
+from google.cloud.pubsub_v1 import PublisherClient  # type: ignore[import-untyped]
+
 from pytest_pubsub.config import Defaults
 from tests.enums import ProjectIds
 

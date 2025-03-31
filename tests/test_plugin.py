@@ -1,7 +1,9 @@
 from pytest import Pytester
-from pytest_pubsub.config import Configuration, Defaults
-from tests.enums import ProjectIds
+
+from pytest_pubsub.config import Configuration
+from pytest_pubsub.config import Defaults
 from pytest_pubsub.pubsub.publisher import GCPPublisher
+from tests.enums import ProjectIds
 
 
 class TestPlugin:

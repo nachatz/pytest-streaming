@@ -1,8 +1,7 @@
 import pytest
-
+from google.api_core.exceptions import NotFound
 from pytest import Config
 
-from google.api_core.exceptions import NotFound
 from pytest_pubsub.pubsub.publisher import GCPPublisher
 from tests.enums import ProjectIds
 
@@ -30,7 +29,7 @@ def publisher() -> GCPPublisher:
 @pytest.fixture(scope="session", autouse=True)
 def destroy_topics(project_ids: list[str], publisher: GCPPublisher) -> None:
     """Ensures the pubsub topics are cleansed prior to each test.
-    
+
     Args:
         project_ids (fixture: list[str]): List of project IDs to clean up.
         publisher (fixture: GCPPublisher): The GCPPublisher instance to use for cleanup.
@@ -43,4 +42,5 @@ def destroy_topics(project_ids: list[str], publisher: GCPPublisher) -> None:
         for topic in found_topics:
             try:
                 publisher.delete_topic(topic=topic)
-            except NotFound: ...
+            except NotFound:
+                ...

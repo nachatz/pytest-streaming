@@ -1,4 +1,4 @@
-name: fmt check
+name: test check
 
 on:
     push:
@@ -9,7 +9,7 @@ on:
         - main
 
 jobs:
-    fmt:
+    test:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -24,10 +24,17 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: .venv
-                key: ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
+                key: ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
                 restore-keys: |
-                  ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
+                  ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
 
-            - name: Run fmt
+            - name: Run docker-compose
               run: |
-                just fmt-check
+                docker compose up -d
+
+            - name: Run test
+              run: |
+                just test
+              env:
+                PUBSUB_EMULATOR_HOST=localhost:8432
+                PUBSUB_PROJECT_ID=pytest-pubsub
