@@ -30,7 +30,7 @@ jobs:
 
             - name: Run docker-compose
               run: |
-                docker-compose up -d
+                docker compose up -d
 
             - name: Run test
               run: |
