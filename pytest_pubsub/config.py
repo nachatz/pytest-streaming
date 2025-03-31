@@ -2,6 +2,7 @@ from enum import StrEnum
 
 
 class Configuration(StrEnum):
+    """Configuration options for pytest-pubsub."""
     GLOBAL_TOPICS = "pytest_pubsub_global_topics"
     GLOBAL_DELETE = "pytest_pubsub_global_delete"
     PROJECT_ID = "pytest_pubsub_project_id"
@@ -9,6 +10,7 @@ class Configuration(StrEnum):
 
 
 class Defaults(StrEnum):
+    """Default values for pytest-pubsub."""
     PROJECT_ID = "default"
 
 

@@ -92,7 +92,7 @@ def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
 
 @pytest.fixture(autouse=True)
 def _markers(request: FixtureRequest, pytestconfig: Config) -> Generator[None, None, None]:
-    """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker.
+    """Setup and teardown for pubsub markers.
 
     Args:
         request: pytest fixture request object

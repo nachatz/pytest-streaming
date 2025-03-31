@@ -3,8 +3,8 @@ import pytest
 from pytest import FixtureRequest
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
 
-from tests.conftest import TestProjectIds
 from pytest_pubsub.config import Defaults
+from tests.conftest import ProjectIds
 
 
 class TestPubsubMarker:
@@ -29,7 +29,7 @@ class TestPubsubMarker:
 
     @pytest.mark.pubsub(
         topics=["test-topic1", "test-topic2"], 
-        project_id=TestProjectIds.PYTEST_PUBSUB
+        project_id=ProjectIds.PYTEST_PUBSUB
     )
     def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest) -> None:
         marker = request.node.get_closest_marker("pubsub")
@@ -47,12 +47,12 @@ class TestPubsubMarker:
         assert len(topics) == 2 == len(found_topics)
         assert path_1 in found_topics
         assert path_2 in found_topics
-        assert project_id == TestProjectIds.PYTEST_PUBSUB
+        assert project_id == ProjectIds.PYTEST_PUBSUB
 
     @pytest.mark.pubsub(
         topics=["test-topic1", "test-topic2"], 
         delete_after=True, 
-        project_id=TestProjectIds.PYTEST_PUBSUB_DELETE
+        project_id=ProjectIds.PYTEST_PUBSUB_DELETE
     )
     def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest) -> None:
         marker = request.node.get_closest_marker("pubsub")
@@ -70,7 +70,7 @@ class TestPubsubMarker:
         assert len(topics) == 2 == len(found_topics)
         assert path_1 in found_topics
         assert path_2 in found_topics
-        assert project_id == TestProjectIds.PYTEST_PUBSUB_DELETE
+        assert project_id == ProjectIds.PYTEST_PUBSUB_DELETE
         assert marker.kwargs["delete_after"] is True
 
     @pytest.mark.pubsub

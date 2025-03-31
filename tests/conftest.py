@@ -1,21 +1,12 @@
 import pytest
 
-from typing import Generator
 from pytest import Config
-from enum import StrEnum
 
 from google.api_core.exceptions import NotFound
-from pytest_pubsub.config import Defaults
 from pytest_pubsub.pubsub.publisher import GCPPublisher
+from tests.enums import ProjectIds
 
 pytest_plugins = ["pytester"]
-
-
-class TestProjectIds(StrEnum):
-    DEFAULT = Defaults.PROJECT_ID
-    PYTEST_PUBSUB = "pytest-pubsub"
-    PYTEST_PUBSUB_DELETE = "pytest-pubsub-delete"
-    PUBLISHER_PUBSUB = "pytest-publisher-pubsub"
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -26,8 +17,9 @@ def plugin_was_loaded(pytestconfig: Config) -> None:
 
 @pytest.fixture(scope="session")
 def project_ids() -> list[str]:
-    """Returns a list of project IDs used in tests."""
-    return [member.value for member in TestProjectIds]
+    """Returns a list of project IDs used in tests sourced
+    from ProjectIds enum."""
+    return [member.value for member in ProjectIds]
 
 
 @pytest.fixture(scope="session")
@@ -37,7 +29,12 @@ def publisher() -> GCPPublisher:
 
 @pytest.fixture(scope="session", autouse=True)
 def destroy_topics(project_ids: list[str], publisher: GCPPublisher) -> None:
-    """Ensures the pubsub topics are cleansed prior to each test."""
+    """Ensures the pubsub topics are cleansed prior to each test.
+    
+    Args:
+        project_ids (fixture: list[str]): List of project IDs to clean up.
+        publisher (fixture: GCPPublisher): The GCPPublisher instance to use for cleanup.
+    """
     for project_id in project_ids:
         project_path = f"projects/{project_id}"
         found_topics = publisher.list_topics(request={"project": project_path})
@@ -46,5 +43,4 @@ def destroy_topics(project_ids: list[str], publisher: GCPPublisher) -> None:
         for topic in found_topics:
             try:
                 publisher.delete_topic(topic=topic)
-            except NotFound:
-                ...
+            except NotFound: ...
