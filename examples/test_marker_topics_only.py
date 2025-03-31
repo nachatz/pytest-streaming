@@ -4,7 +4,7 @@ from pytest import FixtureRequest
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
 
 from pytest_pubsub.config import Defaults
-from tests.conftest import ProjectIds
+from tests.enums import ProjectIds
 
 
 class TestPubsubMarker:

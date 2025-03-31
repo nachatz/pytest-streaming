@@ -1,6 +1,6 @@
 from pytest import Pytester
 from pytest_pubsub.config import Configuration, Defaults
-from tests.conftest import ProjectIds
+from tests.enums import ProjectIds
 from pytest_pubsub.pubsub.publisher import GCPPublisher
 
 

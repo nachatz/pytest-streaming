@@ -1,5 +1,5 @@
 from pytest_pubsub.pubsub.publisher import GCPPublisher
-from tests.conftest import ProjectIds
+from tests.enums import ProjectIds
 
 class TestPublisher:
 
