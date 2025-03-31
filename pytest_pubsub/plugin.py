@@ -1,7 +1,8 @@
+import pytest
+
 from contextlib import ExitStack
 from typing import Generator
 from pytest import Config, FixtureRequest, Parser, OptionGroup, Session
-import pytest
 from pytest_pubsub.pubsub.publisher import GCPPublisher
 from pytest_pubsub.config import Configuration, Defaults, MarkerConfiguration
 from pytest_pubsub.fixtures.markers import pubsub_setup_marker
