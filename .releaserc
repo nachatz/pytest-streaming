@@ -1,5 +1,6 @@
 {
     "branches": ["feat/semantic-release"],
+    "repositoryUrl": "https://github.com/nachatz/pytest-pubsub",
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
