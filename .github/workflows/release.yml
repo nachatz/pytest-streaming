@@ -30,3 +30,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: semantic-release --branches main
+
