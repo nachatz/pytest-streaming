@@ -1,6 +1,7 @@
 name: check for stale pull requests
 on:
-  - cron: '0 1 */14 * *'
+  schedule:
+    - cron: '0 1 */14 * *'
 
 jobs:
   stale:
