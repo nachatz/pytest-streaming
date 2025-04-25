@@ -1,5 +1,3 @@
-from typing import Generator
-
 import pytest
 from google.api_core.exceptions import NotFound
 from pytest import Config
