@@ -1,4 +1,3 @@
-
 install:
     mise install --yes
 

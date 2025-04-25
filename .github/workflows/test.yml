@@ -37,4 +37,4 @@ jobs:
                 just test
               env:
                 PUBSUB_EMULATOR_HOST: localhost:8432
-                PUBSUB_PROJECT_ID: pytest-streaming-pubsub
+                PUBSUB_PROJECT_ID: pytest-streaming

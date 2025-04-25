@@ -12,7 +12,7 @@ class Configuration(StrEnum):
 class Defaults(StrEnum):
     """Default values for pytest_streaming."""
 
-    PROJECT_ID = "default"
+    PROJECT_ID = "pytest-streaming"
 
 
 class MarkerConfiguration(StrEnum):
