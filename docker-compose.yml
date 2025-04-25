@@ -6,3 +6,4 @@ services:
       - "8432:8432"
     environment:
       PUBSUB_PROJECT_ID: pytest-streaming
+      PUBSUB_EMULATOR_HOST: localhost:8432
