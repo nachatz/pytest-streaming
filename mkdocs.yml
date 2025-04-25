@@ -1,6 +1,6 @@
 # https://www.mkdocs.org/user-guide/configuration/
 
-site_name: pytest-pubsub
+site_name: pytest_streaming
 theme:
   name: material
   logo: assets/icon.png
@@ -15,9 +15,9 @@ theme:
       primary: black
 docs_dir: docs
 
-repo_url: "https://github.com/nachatz/pytest-pubsub"
+repo_url: "https://github.com/nachatz/pytest_streaming"
 
-repo_name: pytest-pubsub
+repo_name: pytest_streaming
 
 nav:
   - Home: index.md

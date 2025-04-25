@@ -1,8 +1,10 @@
+from typing import Generator
+
 import pytest
 from google.api_core.exceptions import NotFound
 from pytest import Config
 
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest_streaming.pubsub.publisher import GCPPublisher
 from tests.enums import ProjectIds
 
 pytest_plugins = ["pytester"]
@@ -10,8 +12,8 @@ pytest_plugins = ["pytester"]
 
 @pytest.fixture(scope="session", autouse=True)
 def plugin_was_loaded(pytestconfig: Config) -> None:
-    """Ensures the pytest-pubsub plugin is loaded."""
-    assert pytestconfig.pluginmanager.hasplugin("pytest_pubsub")
+    """Ensures the pytest-streaming plugin is loaded."""
+    assert pytestconfig.pluginmanager.hasplugin("pytest_streaming")
 
 
 @pytest.fixture(scope="session")
