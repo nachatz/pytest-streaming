@@ -2,7 +2,7 @@ import pytest
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
 from pytest import FixtureRequest
 
-from pytest_pubsub.config import Defaults
+from pytest_streaming.config import Defaults
 from tests.enums import ProjectIds
 
 

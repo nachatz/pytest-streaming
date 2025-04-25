@@ -1,4 +1,4 @@
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest_streaming.pubsub.publisher import GCPPublisher
 from tests.enums import ProjectIds
 
 

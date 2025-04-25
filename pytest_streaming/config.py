@@ -2,18 +2,17 @@ from enum import StrEnum
 
 
 class Configuration(StrEnum):
-    """Configuration options for pytest-pubsub."""
+    """Configuration options for pytest_streaming."""
 
-    GLOBAL_TOPICS = "pytest_pubsub_global_topics"
-    GLOBAL_DELETE = "pytest_pubsub_global_delete"
-    PROJECT_ID = "pytest_pubsub_project_id"
-    RUN_EMULATOR = "pytest_pubsub_run_emulator"
+    PUBSUB_GLOBAL_TOPICS = "pytest_streaming_pubsub_global_topics"
+    PUBSUB_GLOBAL_DELETE = "pytest_streaming_pubsub_global_delete"
+    PUBSUB_PROJECT_ID = "pytest_streaming_pubsub_project_id"
 
 
 class Defaults(StrEnum):
-    """Default values for pytest-pubsub."""
+    """Default values for pytest_streaming."""
 
-    PROJECT_ID = "default"
+    PROJECT_ID = "pytest-streaming"
 
 
 class MarkerConfiguration(StrEnum):

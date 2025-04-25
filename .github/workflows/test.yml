@@ -24,9 +24,9 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: .venv
-                key: ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
+                key: ${{ runner.os }}-test-pytest-${{ hashFiles('**/pyproject.toml') }}
                 restore-keys: |
-                  ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
+                  ${{ runner.os }}-test-pytest-${{ hashFiles('**/pyproject.toml') }}
 
             - name: Run docker-compose
               run: |
@@ -36,5 +36,5 @@ jobs:
               run: |
                 just test
               env:
-                PUBSUB_EMULATOR_HOST=localhost:8432
-                PUBSUB_PROJECT_ID=pytest-pubsub
+                PUBSUB_EMULATOR_HOST: localhost:8432
+                PUBSUB_PROJECT_ID: pytest-streaming

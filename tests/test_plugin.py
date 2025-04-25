@@ -1,8 +1,8 @@
 from pytest import Pytester
 
-from pytest_pubsub.config import Configuration
-from pytest_pubsub.config import Defaults
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest_streaming.config import Configuration
+from pytest_streaming.config import Defaults
+from pytest_streaming.pubsub.publisher import GCPPublisher
 from tests.enums import ProjectIds
 
 
@@ -10,7 +10,7 @@ class TestPlugin:
     def test_global_create_topics(self, pytester: Pytester, publisher: GCPPublisher) -> None:
         pytester.makeini(f"""
         [pytest]
-        {Configuration.GLOBAL_TOPICS} = 
+        {Configuration.PUBSUB_GLOBAL_TOPICS} = 
             {ProjectIds.GLOBAL_TOPIC_CREATE_ONE}
             {ProjectIds.GLOBAL_TOPIC_CREATE_TWO}
         """)
@@ -31,12 +31,12 @@ class TestPlugin:
     def test_global_delete_topics(self, pytester: Pytester, publisher: GCPPublisher) -> None:
         pytester.makeini(f"""
         [pytest]
-        {Configuration.GLOBAL_TOPICS} = 
+        {Configuration.PUBSUB_GLOBAL_TOPICS} = 
             {ProjectIds.GLOBAL_TOPIC_DELETE_ONE}
             {ProjectIds.GLOBAL_TOPIC_DELETE_TWO}
 
-        {Configuration.GLOBAL_DELETE} = True
-        {Configuration.PROJECT_ID} = {ProjectIds.GLOBAL_DELETE}
+        {Configuration.PUBSUB_GLOBAL_DELETE} = True
+        {Configuration.PUBSUB_PROJECT_ID} = {ProjectIds.GLOBAL_DELETE}
         """)
 
         pytester.copy_example("test_plugin.py")

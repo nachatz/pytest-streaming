@@ -24,7 +24,7 @@ documentation:
 source:
   - changed-files:
     - any-glob-to-any-file:
-      - pytest_pubsub/**
+      - pytest_streaming/**
 
 test:
 - changed-files:

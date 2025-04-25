@@ -807,7 +807,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pytest-pubsub"
+name = "pytest-streaming"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

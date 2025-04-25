@@ -4,8 +4,8 @@ from typing import Generator
 from pytest import Config
 from pytest import FixtureRequest
 
-from pytest_pubsub.config import Configuration
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest_streaming.config import Configuration
+from pytest_streaming.pubsub.publisher import GCPPublisher
 
 
 @contextmanager
@@ -23,7 +23,7 @@ def pubsub_setup_marker(request: FixtureRequest, pytestconfig: Config) -> Genera
 
     delete_after = marker.kwargs.get("delete_after", False)
     override_project_id = marker.kwargs.get("project_id", None)
-    project_id = override_project_id or pytestconfig.getini(Configuration.PROJECT_ID)
+    project_id = override_project_id or pytestconfig.getini(Configuration.PUBSUB_PROJECT_ID)
     topics = marker.kwargs.get("topics", [])
     if not topics:
         raise ValueError("No topics specified for the pubsub marker")

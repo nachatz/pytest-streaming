@@ -8,11 +8,11 @@ from pytest import OptionGroup
 from pytest import Parser
 from pytest import Session
 
-from pytest_pubsub.config import Configuration
-from pytest_pubsub.config import Defaults
-from pytest_pubsub.config import MarkerConfiguration
-from pytest_pubsub.fixtures.markers import pubsub_setup_marker
-from pytest_pubsub.pubsub.publisher import GCPPublisher
+from pytest_streaming.config import Configuration
+from pytest_streaming.config import Defaults
+from pytest_streaming.config import MarkerConfiguration
+from pytest_streaming.fixtures.markers import pubsub_setup_marker
+from pytest_streaming.pubsub.publisher import GCPPublisher
 
 
 def pytest_addoption(parser: Parser) -> None:
@@ -24,33 +24,27 @@ def pytest_addoption(parser: Parser) -> None:
     Args:
         parser: pytest parser object
     """
-    _: OptionGroup = parser.getgroup("pytest-pubsub", "Pub/Sub plugin options")
+    _: OptionGroup = parser.getgroup("pytest-streaming", "Pub/Sub plugin options")
 
     parser.addini(
-        Configuration.GLOBAL_TOPICS,
+        Configuration.PUBSUB_GLOBAL_TOPICS,
         "Comma separated list of global Pub/Sub topics to create at session start - default is None and is a line list",
         type="linelist",
         default=[],
     )
 
     parser.addini(
-        Configuration.GLOBAL_DELETE,
+        Configuration.PUBSUB_GLOBAL_DELETE,
         "Whether to delete global topics after session finishes (True/False) - default is True",
         type="bool",
         default=False,
     )
 
     parser.addini(
-        Configuration.PROJECT_ID,
+        Configuration.PUBSUB_PROJECT_ID,
         "GCP project ID to use for Pub/Sub topics (local only) - default is 'default'",
         type="string",
         default=Defaults.PROJECT_ID,
-    )
-
-    parser.addini(
-        Configuration.RUN_EMULATOR,
-        "Whether to run the Pub/Sub emulator before tests (True/False) - default is False",
-        default=False,
     )
 
 
@@ -63,17 +57,14 @@ def pytest_configure(config: Config) -> None:
 def pytest_sessionstart(session: Session) -> None:
     """Creates global topics if specified in the ini file.
 
-    Also, starts the pubsub emulator if the option is set.
-
     Args:
         session: pytest session object
     """
     config: Config = session.config
-    global_topics_to_create = config.getini(Configuration.GLOBAL_TOPICS)
-    run_pubsub_emulator = config.getini(Configuration.RUN_EMULATOR)
-    project_id = config.getini(Configuration.PROJECT_ID)
+    global_topics_to_create = config.getini(Configuration.PUBSUB_GLOBAL_TOPICS)
+    project_id = config.getini(Configuration.PUBSUB_PROJECT_ID)
 
-    if run_pubsub_emulator or not global_topics_to_create:
+    if not global_topics_to_create:
         return
 
     GCPPublisher().setup_testing_topics(project_id, global_topics_to_create)
@@ -88,9 +79,9 @@ def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
     """
 
     config: Config = session.config
-    global_topics_to_create = config.getini(Configuration.GLOBAL_TOPICS)
-    cleanup_global_topics = config.getini(Configuration.GLOBAL_DELETE)
-    project_id = config.getini(Configuration.PROJECT_ID)
+    global_topics_to_create = config.getini(Configuration.PUBSUB_GLOBAL_TOPICS)
+    cleanup_global_topics = config.getini(Configuration.PUBSUB_GLOBAL_DELETE)
+    project_id = config.getini(Configuration.PUBSUB_PROJECT_ID)
 
     if not cleanup_global_topics:
         return
