@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from enum import StrEnum
 from typing import Generator
+from typing import cast
 
 from pytest_streaming.abstracts.markers import BaseMarker
 from pytest_streaming.config import Configuration
@@ -56,32 +57,36 @@ class PubsubMarker(BaseMarker):
 
     @property
     def topics(self) -> list[str]:
-        assert self.marker, "Marker is not set"
+        if not self.marker:
+            raise ValueError("Marker (pubsub) is not set")
+
         topics = self.marker.kwargs.get(PubsubMarkerParams.TOPICS.root(), self._topics)
-        if not topics or not isinstance(topics, list):
+        if not topics or not isinstance(topics, list) or not all(isinstance(topic, str) for topic in topics):
             raise ValueError("No topics specified or invalid specification (list[str]) for the pubsub marker")
-        return topics
+        return cast(list[str], topics)
 
     @property
     def delete_after(self) -> bool:
-        assert self.marker, "Marker is not set"
+        if not self.marker:
+            raise ValueError("Marker (pubsub) is not set")
+
         return self.marker.kwargs.get(PubsubMarkerParams.DELETE_AFTER.root(), self._delete_after)
 
     @property
     def project_id(self) -> str:
-        assert self.marker, "Marker is not set"
+        if not self.marker:
+            raise ValueError("Marker (pubsub) is not set")
+
         override_project_id = self.marker.kwargs.get(PubsubMarkerParams.PROJECT_ID.root(), self._project_id)
         project_id = override_project_id or self.config.getini(Configuration.PUBSUB_PROJECT_ID)
+        if not isinstance(project_id, str):
+            raise ValueError("Invalid specification for project_id (str)")
+
         return project_id
 
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
-        """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker.
-
-        Args:
-            request: pytest fixture request object
-            pytestconfig: pytest config object
-        """
+        """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker."""
         if not self.marker:
             yield
             return
