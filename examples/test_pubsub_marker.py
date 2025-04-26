@@ -1,15 +1,18 @@
 import pytest
+from _pytest.nodes import Node
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
 from pytest import FixtureRequest
+from pytest import Mark
 
 from pytest_streaming.config import Defaults
-from tests.enums import ProjectIds
+from tests.pubsub.enums import PubsubProjectId
 
 
 class TestPubsubMarker:
     @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"])
     def test_pubsub_marker_topic_creation_base(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
 
         project_id = Defaults.PROJECT_ID
@@ -26,9 +29,10 @@ class TestPubsubMarker:
         assert path_2 in found_topics
         assert project_id == Defaults.PROJECT_ID
 
-    @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"], project_id=ProjectIds.PYTEST_PUBSUB)
+    @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"], project_id=PubsubProjectId.FIXTURE)
     def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
 
@@ -43,13 +47,14 @@ class TestPubsubMarker:
         assert len(topics) == 2 == len(found_topics)
         assert path_1 in found_topics
         assert path_2 in found_topics
-        assert project_id == ProjectIds.PYTEST_PUBSUB
+        assert project_id == PubsubProjectId.FIXTURE
 
     @pytest.mark.pubsub(
-        topics=["test-topic1", "test-topic2"], delete_after=True, project_id=ProjectIds.PYTEST_PUBSUB_DELETE
+        topics=["test-topic1", "test-topic2"], delete_after=True, project_id=PubsubProjectId.FIXTURE_DELETE
     )
     def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
 
@@ -64,7 +69,7 @@ class TestPubsubMarker:
         assert len(topics) == 2 == len(found_topics)
         assert path_1 in found_topics
         assert path_2 in found_topics
-        assert project_id == ProjectIds.PYTEST_PUBSUB_DELETE
+        assert project_id == PubsubProjectId.FIXTURE_DELETE
         assert marker.kwargs["delete_after"] is True
 
     @pytest.mark.pubsub

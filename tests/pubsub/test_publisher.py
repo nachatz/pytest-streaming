@@ -1,10 +1,10 @@
 from pytest_streaming.pubsub.publisher import GCPPublisher
-from tests.enums import ProjectIds
+from tests.pubsub.enums import PubsubProjectId
 
 
 class TestPublisher:
     def test_pubsub_topics_create(self, publisher: GCPPublisher) -> None:
-        project_id = ProjectIds.PUBLISHER_PUBSUB_CREATE
+        project_id = PubsubProjectId.PUBLISHER_CREATE
         topics = ["topic1", "topic2"]
         project_path = f"projects/{project_id}"
 
@@ -14,7 +14,7 @@ class TestPublisher:
             assert topic_path in [t.name for t in publisher.list_topics(request={"project": project_path})]
 
     def test_pubsub_topics_delete(self, publisher: GCPPublisher) -> None:
-        project_id = ProjectIds.PUBLISHER_PUBSUB_DELETE
+        project_id = PubsubProjectId.PUBLISHER_DELETE
         topics = ["topic1", "topic2"]
         project_path = f"projects/{project_id}"
 

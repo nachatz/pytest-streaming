@@ -22,5 +22,11 @@ mypy:
 test:
     uv run pytest tests
 
+check:
+    just fmt
+    just fmt-check
+    just mypy
+    just test
+
 docs:
     uv run mkdocs serve
