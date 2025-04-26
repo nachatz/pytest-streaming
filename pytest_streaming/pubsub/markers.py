@@ -91,9 +91,10 @@ class PubsubMarker(BaseMarker):
             yield
             return
 
-        GCPPublisher().setup_testing_topics(self.project_id, self.topics)
+        safety = self.config.getini(Configuration.PUBSUB_EMULATOR_ENABLED)
+        GCPPublisher().setup_testing_topics(self.project_id, self.topics, safety=safety)
 
         yield
 
         if self.delete_after:
-            GCPPublisher().delete_testing_topics(self.project_id, self.topics)
+            GCPPublisher().delete_testing_topics(self.project_id, self.topics, safety=safety)

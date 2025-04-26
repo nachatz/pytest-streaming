@@ -37,6 +37,13 @@ def pubsub_addoption(parser: Parser) -> None:
         default=Defaults.PROJECT_ID,
     )
 
+    parser.addini(
+        Configuration.PUBSUB_EMULATOR_ENABLED,
+        "Ensures the pubsub emulator is being used",
+        type="bool",
+        default=True,
+    )
+
 
 def pubsub_sessionstart(session: Session) -> None:
     """Creates global topics if specified in the ini file
@@ -48,10 +55,11 @@ def pubsub_sessionstart(session: Session) -> None:
     config: Config = session.config
     project_id = config.getini(Configuration.PUBSUB_PROJECT_ID)
     global_topics_to_create = config.getini(Configuration.PUBSUB_GLOBAL_TOPICS)
+    safety = config.getini(Configuration.PUBSUB_EMULATOR_ENABLED)
     if not global_topics_to_create:
         return
 
-    GCPPublisher().setup_testing_topics(project_id, global_topics_to_create)
+    GCPPublisher().setup_testing_topics(project_id, global_topics_to_create, safety=safety)
 
 
 def pubsub_sessionfinish(session: Session) -> None:
@@ -64,7 +72,8 @@ def pubsub_sessionfinish(session: Session) -> None:
     project_id = config.getini(Configuration.PUBSUB_PROJECT_ID)
     global_topics_to_create = config.getini(Configuration.PUBSUB_GLOBAL_TOPICS)
     cleanup_global_topics = config.getini(Configuration.PUBSUB_GLOBAL_DELETE)
+    safety = config.getini(Configuration.PUBSUB_EMULATOR_ENABLED)
     if not cleanup_global_topics:
         return
 
-    GCPPublisher().delete_testing_topics(project_id, global_topics_to_create)
+    GCPPublisher().delete_testing_topics(project_id, global_topics_to_create, safety=safety)
