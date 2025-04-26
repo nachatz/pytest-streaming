@@ -25,7 +25,7 @@ def pubsub_addoption(parser: Parser) -> None:
 
     parser.addini(
         Configuration.PUBSUB_GLOBAL_DELETE,
-        "Whether to delete global topics after session finishes (True/False) - default is True",
+        "Whether to delete global topics after session finishes (True/False) - default is False",
         type="bool",
         default=False,
     )
