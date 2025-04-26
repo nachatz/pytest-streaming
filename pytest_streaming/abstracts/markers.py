@@ -13,9 +13,9 @@ from pytest import Mark
 class BaseMarker(ABC):
     config: Config
     request: FixtureRequest
-    marker_name: str = ""
-    marker_description: str = ""
-    marker_params: list[str] = []
+    marker_name: str
+    marker_description: str
+    marker_params: list[str]
 
     def __init__(self, config: Config, request: FixtureRequest) -> None:
         self.config = config
