@@ -24,9 +24,9 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: .venv
-                key: ${{ runner.os }}-test-pytest-${{ hashFiles('**/pyproject.toml') }}
+                key: ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
                 restore-keys: |
-                  ${{ runner.os }}-test-pytest-${{ hashFiles('**/pyproject.toml') }}
+                  ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
 
             - name: Run docker-compose
               run: |
