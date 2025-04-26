@@ -8,8 +8,7 @@ from pytest import OptionGroup
 from pytest import Parser
 from pytest import Session
 
-from pytest_streaming.config import MarkerConfiguration
-from pytest_streaming.fixtures.markers import pubsub_setup_marker
+from pytest_streaming.pubsub.markers import PubsubMarker
 from pytest_streaming.pubsub.plugin import pubsub_addoption
 from pytest_streaming.pubsub.plugin import pubsub_sessionfinish
 from pytest_streaming.pubsub.plugin import pubsub_sessionstart
@@ -26,17 +25,6 @@ def pytest_addoption(parser: Parser) -> None:
     """
     _: OptionGroup = parser.getgroup("pytest-streaming", "Streaming plugin options")
     pubsub_addoption(parser)
-
-
-def pytest_configure(config: Config) -> None:
-    """Establish all of our marker setups.
-
-    Args:
-        config: pytest config object
-    """
-    config.addinivalue_line(
-        "markers", f"{MarkerConfiguration.pubsub}: Create specified Pub/Sub topics automatically for the test. "
-    )
 
 
 def pytest_sessionstart(session: Session) -> None:
@@ -58,14 +46,28 @@ def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
     pubsub_sessionfinish(session)
 
 
+def pytest_configure(config: Config) -> None:
+    """Establish all of our marker setups.
+
+    Args:
+        config: pytest config object
+    """
+    config.addinivalue_line("markers", PubsubMarker.definition())
+
+
 @pytest.fixture(autouse=True)
 def _markers(request: FixtureRequest, pytestconfig: Config) -> Generator[None, None, None]:
-    """Setup and teardown for pubsub markers.
+    """Setup and teardown for all streaming markers.
 
     Args:
         request: pytest fixture request object
         pytestconfig: pytest config object
     """
+    markers = [
+        PubsubMarker(config=pytestconfig, request=request),
+    ]
+
     with ExitStack() as stack:
-        stack.enter_context(pubsub_setup_marker(request, pytestconfig))
+        for marker in markers:
+            stack.enter_context(marker.impl())
         yield

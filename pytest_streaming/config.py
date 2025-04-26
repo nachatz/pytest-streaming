@@ -15,13 +15,4 @@ class Defaults(StrEnum):
     PROJECT_ID = "pytest-streaming"
 
 
-class MarkerConfiguration(StrEnum):
-    """Configuration options for custom markers."""
-
-    pubsub = "pubsub(topics=list, delete_after=bool, project_id=str)"
-
-
-class HookConfiguration(StrEnum):
-    """Configuration options for hooks."""
-
-    ...
+class HookConfiguration(StrEnum): ...
