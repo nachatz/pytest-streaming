@@ -1,6 +1,8 @@
 import pytest
+from _pytest.nodes import Node
 from google.cloud.pubsub_v1 import PublisherClient  # type: ignore
 from pytest import FixtureRequest
+from pytest import Mark
 
 from pytest_streaming.config import Defaults
 from tests.pubsub.enums import PubsubProjectId
@@ -9,7 +11,8 @@ from tests.pubsub.enums import PubsubProjectId
 class TestPubsubMarker:
     @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"])
     def test_pubsub_marker_topic_creation_base(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
 
         project_id = Defaults.PROJECT_ID
@@ -28,7 +31,8 @@ class TestPubsubMarker:
 
     @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"], project_id=PubsubProjectId.FIXTURE)
     def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
 
@@ -49,7 +53,8 @@ class TestPubsubMarker:
         topics=["test-topic1", "test-topic2"], delete_after=True, project_id=PubsubProjectId.FIXTURE_DELETE
     )
     def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest) -> None:
-        marker = request.node.get_closest_marker("pubsub")
+        node: Node = request.node
+        marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
 

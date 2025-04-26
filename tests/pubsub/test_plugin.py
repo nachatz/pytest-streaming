@@ -15,8 +15,8 @@ class TestPubsubPlugin:
             {PubsubTopicName.GLOBAL_TOPIC_CREATE_ONE}
             {PubsubTopicName.GLOBAL_TOPIC_CREATE_TWO}
         """)
-        pytester.copy_example("test_plugin.py")
-        result = pytester.runpytest("-k", "test_global_create_topics")
+        pytester.copy_example("test_pubsub_plugin.py")
+        result = pytester.runpytest("-k", "test_pubsub_global_create_topics")
         result.assert_outcomes(passed=1)
 
         project_path = f"projects/{Defaults.PROJECT_ID}"
@@ -40,8 +40,8 @@ class TestPubsubPlugin:
         {Configuration.PUBSUB_PROJECT_ID} = {PubsubProjectId.GLOBAL_DELETE}
         """)
 
-        pytester.copy_example("test_plugin.py")
-        result = pytester.runpytest("-k", "test_global_delete_topics")
+        pytester.copy_example("test_pubsub_plugin.py")
+        result = pytester.runpytest("-k", "test_pubsub_global_delete_topics")
         result.assert_outcomes(passed=1)
 
         project_path = f"projects/{PubsubProjectId.GLOBAL_DELETE}"

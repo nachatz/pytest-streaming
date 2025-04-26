@@ -5,8 +5,8 @@ from tests.pubsub.enums import PubsubProjectId
 from tests.pubsub.enums import PubsubTopicName
 
 
-class TestPlugin:
-    def test_global_create_topics(self) -> None:
+class TestPubsubPlugin:
+    def test_pubsub_global_create_topics(self) -> None:
         publisher = PublisherClient()
         project_id = Defaults.PROJECT_ID
         project_path = f"projects/{project_id}"
@@ -20,7 +20,7 @@ class TestPlugin:
         assert topic_1 in found_topics
         assert topic_2 in found_topics
 
-    def test_global_delete_topics(self) -> None:
+    def test_pubsub_global_delete_topics(self) -> None:
         publisher = PublisherClient()
         project_id = PubsubProjectId.GLOBAL_DELETE
         project_path = f"projects/{project_id}"
