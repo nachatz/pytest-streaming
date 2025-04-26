@@ -1,10 +1,10 @@
 from pytest import Pytester
 
 from pytest_streaming.pubsub.publisher import GCPPublisher
-from tests.enums import ProjectIds
+from tests.pubsub.enums import PubsubProjectId
 
 
-class TestMarkers:
+class TestPubsubMarkers:
     def test_pubsub_marker_topic_creation_base(self, pytester: Pytester) -> None:
         pytester.copy_example("test_marker_topics_only.py")
         result = pytester.runpytest("-k", "test_pubsub_marker_topic_creation_base")
@@ -20,7 +20,7 @@ class TestMarkers:
         result = pytester.runpytest("-k", "test_pubsub_marker_topic_creation_autodelete")
         result.assert_outcomes(passed=1)
 
-        project_id = ProjectIds.PYTEST_PUBSUB_DELETE
+        project_id = PubsubProjectId.FIXTURE_DELETE
         project_path = f"projects/{project_id}"
 
         found_topics = publisher.list_topics(request={"project": project_path})

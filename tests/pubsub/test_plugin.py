@@ -3,16 +3,17 @@ from pytest import Pytester
 from pytest_streaming.config import Configuration
 from pytest_streaming.config import Defaults
 from pytest_streaming.pubsub.publisher import GCPPublisher
-from tests.enums import ProjectIds
+from tests.pubsub.enums import PubsubProjectId
+from tests.pubsub.enums import PubsubTopicName
 
 
-class TestPlugin:
+class TestPubsubPlugin:
     def test_global_create_topics(self, pytester: Pytester, publisher: GCPPublisher) -> None:
         pytester.makeini(f"""
         [pytest]
         {Configuration.PUBSUB_GLOBAL_TOPICS} = 
-            {ProjectIds.GLOBAL_TOPIC_CREATE_ONE}
-            {ProjectIds.GLOBAL_TOPIC_CREATE_TWO}
+            {PubsubTopicName.GLOBAL_TOPIC_CREATE_ONE}
+            {PubsubTopicName.GLOBAL_TOPIC_CREATE_TWO}
         """)
         pytester.copy_example("test_plugin.py")
         result = pytester.runpytest("-k", "test_global_create_topics")
@@ -22,8 +23,8 @@ class TestPlugin:
         found_topics = publisher.list_topics(request={"project": project_path})
         found_topics = [topic.name for topic in found_topics]
 
-        topic_1 = publisher.topic_path(Defaults.PROJECT_ID, ProjectIds.GLOBAL_TOPIC_CREATE_ONE)
-        topic_2 = publisher.topic_path(Defaults.PROJECT_ID, ProjectIds.GLOBAL_TOPIC_CREATE_TWO)
+        topic_1 = publisher.topic_path(Defaults.PROJECT_ID, PubsubTopicName.GLOBAL_TOPIC_CREATE_ONE)
+        topic_2 = publisher.topic_path(Defaults.PROJECT_ID, PubsubTopicName.GLOBAL_TOPIC_CREATE_TWO)
 
         assert topic_1 in found_topics
         assert topic_2 in found_topics
@@ -32,18 +33,18 @@ class TestPlugin:
         pytester.makeini(f"""
         [pytest]
         {Configuration.PUBSUB_GLOBAL_TOPICS} = 
-            {ProjectIds.GLOBAL_TOPIC_DELETE_ONE}
-            {ProjectIds.GLOBAL_TOPIC_DELETE_TWO}
+            {PubsubTopicName.GLOBAL_TOPIC_DELETE_ONE}
+            {PubsubTopicName.GLOBAL_TOPIC_DELETE_TWO}
 
         {Configuration.PUBSUB_GLOBAL_DELETE} = True
-        {Configuration.PUBSUB_PROJECT_ID} = {ProjectIds.GLOBAL_DELETE}
+        {Configuration.PUBSUB_PROJECT_ID} = {PubsubProjectId.GLOBAL_DELETE}
         """)
 
         pytester.copy_example("test_plugin.py")
         result = pytester.runpytest("-k", "test_global_delete_topics")
         result.assert_outcomes(passed=1)
 
-        project_path = f"projects/{ProjectIds.GLOBAL_DELETE}"
+        project_path = f"projects/{PubsubProjectId.GLOBAL_DELETE}"
         found_topics = publisher.list_topics(request={"project": project_path})
         found_topics = [topic.name for topic in found_topics]
 
