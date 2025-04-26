@@ -8,6 +8,7 @@ class Configuration(StrEnum):
     PUBSUB_GLOBAL_TOPICS = "pytest_streaming_pubsub_global_topics"
     PUBSUB_GLOBAL_DELETE = "pytest_streaming_pubsub_global_delete"
     PUBSUB_PROJECT_ID = "pytest_streaming_pubsub_project_id"
+    PUBSUB_EMULATOR_ENABLED = "pytest_streaming_pubsub_emulator_enabled"
 
 
 class Defaults(StrEnum):
