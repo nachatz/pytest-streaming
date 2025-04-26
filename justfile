@@ -20,7 +20,8 @@ mypy:
     uv run mypy --strict .
 
 test:
-    uv run pytest tests
+    uv run pytest --cov=pytest_streaming -n 2 tests/ --cov-fail-under=40 -vv
+
 
 check:
     just fmt
