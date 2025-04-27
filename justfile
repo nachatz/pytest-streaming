@@ -11,6 +11,8 @@ compose:
 fmt:
     uv run ruff check --select I --fix
     uv run ruff format
+
+fmt-check:
     uv run ruff format --check
     uv run ruff check
 
@@ -23,12 +25,16 @@ test:
 
 yml:
     uv run yamlfix .
-    uv run yamllint .
 
+yml-check:
+    uv run yamllint .
+    
 check:
     just fmt
-    just mypy
+    just fmt-check
     just yml
+    just yml-check
+    just mypy
     just test
 
 docs:
