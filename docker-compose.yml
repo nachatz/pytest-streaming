@@ -1,9 +1,9 @@
+---
 services:
   pubsub-emulator:
     image: google/cloud-sdk:latest
     command: gcloud beta emulators pubsub start --project=pytest-streaming --host-port=0.0.0.0:8432
-    ports:
-      - "8432:8432"
+    ports: [8432:8432]
     environment:
       PUBSUB_PROJECT_ID: pytest-streaming
       PUBSUB_EMULATOR_HOST: localhost:8432

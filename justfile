@@ -11,8 +11,6 @@ compose:
 fmt:
     uv run ruff check --select I --fix
     uv run ruff format
-
-fmt-check:
     uv run ruff format --check
     uv run ruff check
 
@@ -23,10 +21,14 @@ test:
     uv run coverage run -m pytest tests/ -vv
     uv run coverage report
 
+yml:
+    uv run yamlfix .
+    uv run yamllint .
+
 check:
     just fmt
-    just fmt-check
     just mypy
+    just yml
     just test
 
 docs:
