@@ -1,47 +1,37 @@
-
+---
 bug:
-- head-branch:
-    - bug
-
+  - head-branch: [bug]
 build:
-- changed-files:
-  - any-glob-to-any-file:
-    - .github/workflows/build.yml
-
+  - changed-files:
+      - any-glob-to-any-file: [.github/workflows/build.yml]
 ci:
-- changed-files:
-  - any-glob-to-any-file:
-    - .github/workflows/**
-
+  - changed-files:
+      - any-glob-to-any-file: [.github/workflows/**]
 documentation:
-- changed-files:
-  - any-glob-to-any-file:
-    - docs/**
-    - README.md
-    - CHANGELOG.md
-    - .github/workflows/deploy_docs.yml
-
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/**
+          - README.md
+          - CHANGELOG.md
+          - .github/workflows/deploy_docs.yml
 source:
   - changed-files:
-    - any-glob-to-any-file:
-      - pytest_streaming/**
-
+      - any-glob-to-any-file: [pytest_streaming/**]
 test:
-- changed-files:
-  - any-glob-to-any-file:
-    - tests/**
-    - examples/**
-    - pytest.ini
-    - .github/workflows/test.yml
-
+  - changed-files:
+      - any-glob-to-any-file:
+          - tests/**
+          - examples/**
+          - pytest.ini
+          - .github/workflows/test.yml
 tools:
-- changed-files:
-  - any-glob-to-any-file:
-    - uv.lock
-    - pyproject.toml
-    - mypy.ini
-    - ruff.toml
-    - docker-compose.yml
-    - .gitignore
-    - .github/workflows/fmt.yml
-    - .github/workflows/mypy.yml
+  - changed-files:
+      - any-glob-to-any-file:
+          - uv.lock
+          - pyproject.toml
+          - mypy.ini
+          - ruff.toml
+          - docker-compose.yml
+          - .gitignore
+          - .github/workflows/fmt.yml
+          - .github/workflows/mypy.yml

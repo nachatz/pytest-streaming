@@ -1,12 +1,12 @@
 ---
-name: mypy check
+name: yml lint
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 jobs:
-  mypy:
+  yml:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,9 +19,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-mypy-${{ hashFiles('**/pyproject.toml') }}
+          key: ${{ runner.os }}-yml-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-mypy-${{ hashFiles('**/pyproject.toml') }}
-      - name: Run mypy
+            ${{ runner.os }}-yml-${{ hashFiles('**/pyproject.toml') }}
+      - name: Run yml lint
         run: |-
-          just mypy
+          just yml-check
