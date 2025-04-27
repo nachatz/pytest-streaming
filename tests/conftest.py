@@ -7,7 +7,6 @@ from tests.pubsub.enums import PubsubProjectId
 
 pytest_plugins = ["pytester"]
 
-
 @pytest.fixture(scope="session", autouse=True)
 def plugin_was_loaded(pytestconfig: Config) -> None:
     """Ensures the pytest-streaming plugin is loaded."""

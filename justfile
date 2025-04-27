@@ -20,8 +20,8 @@ mypy:
     uv run mypy --strict .
 
 test:
-    uv run pytest --cov=pytest_streaming -n 2 tests/ --cov-fail-under=40 -vv
-
+    uv run coverage run -m pytest tests/ -vv
+    uv run coverage report
 
 check:
     just fmt

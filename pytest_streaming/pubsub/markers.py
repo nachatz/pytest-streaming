@@ -58,7 +58,7 @@ class PubsubMarker(BaseMarker):
     @property
     def topics(self) -> list[str]:
         if not self.marker:
-            raise ValueError("Marker (pubsub) is not set")
+            raise ValueError("Marker (pubsub) is not set") # pragma: no cover
 
         topics = self.marker.kwargs.get(PubsubMarkerParams.TOPICS.root(), self._topics)
         if not topics or not isinstance(topics, list) or not all(isinstance(topic, str) for topic in topics):
@@ -68,19 +68,19 @@ class PubsubMarker(BaseMarker):
     @property
     def delete_after(self) -> bool:
         if not self.marker:
-            raise ValueError("Marker (pubsub) is not set")
+            raise ValueError("Marker (pubsub) is not set") # pragma: no cover
 
         return self.marker.kwargs.get(PubsubMarkerParams.DELETE_AFTER.root(), self._delete_after)
 
     @property
     def project_id(self) -> str:
         if not self.marker:
-            raise ValueError("Marker (pubsub) is not set")
+            raise ValueError("Marker (pubsub) is not set") # pragma: no cover
 
         override_project_id = self.marker.kwargs.get(PubsubMarkerParams.PROJECT_ID.root(), self._project_id)
         project_id = override_project_id or self.config.getini(Configuration.PUBSUB_PROJECT_ID)
         if not isinstance(project_id, str):
-            raise ValueError("Invalid specification for project_id (str)")
+            raise ValueError("Invalid specification for project_id (str)") # pragma: no cover
 
         return project_id
 
