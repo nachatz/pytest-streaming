@@ -19,6 +19,7 @@ classifiers = [
 ]
 dependencies = [
     "google-cloud-pubsub>=2.29.0",
+    "pulsar-client>=3.5.0",
     "pytest>=8.3.5",
     "types-protobuf>=5.29.1.20250315",
 ]
