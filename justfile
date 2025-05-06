@@ -20,12 +20,20 @@ mypy:
     uv run mypy --strict .
 
 test:
-    uv run pytest --cov=pytest_streaming -n 2 tests/ --cov-fail-under=40 -vv
+    uv run coverage run -m pytest tests/ -vv
+    uv run coverage report
 
+yml:
+    uv run yamlfix .
 
+yml-check:
+    uv run yamllint .
+    
 check:
     just fmt
     just fmt-check
+    just yml
+    just yml-check
     just mypy
     just test
 

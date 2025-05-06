@@ -36,5 +36,4 @@ class BaseMarker(ABC):
 
     @abstractmethod
     @contextmanager
-    def impl(self) -> Generator[None, None, None]:
-        raise NotImplementedError("Subclasses must implement this method")
+    def impl(self) -> Generator[None, None, None]: ...
