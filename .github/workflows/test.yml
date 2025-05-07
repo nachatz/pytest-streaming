@@ -22,9 +22,9 @@ jobs:
           key: ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-test-${{ hashFiles('**/pyproject.toml') }}
-      - name: Run docker-compose
+      - name: run docker-compose
         run: |
           docker compose up -d
-      - name: Run test
+      - name: run test
         run: |-
           just test

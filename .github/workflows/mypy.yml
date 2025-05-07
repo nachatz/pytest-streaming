@@ -22,6 +22,6 @@ jobs:
           key: ${{ runner.os }}-mypy-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-mypy-${{ hashFiles('**/pyproject.toml') }}
-      - name: Run mypy
+      - name: run mypy
         run: |-
           just mypy
