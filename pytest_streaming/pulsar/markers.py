@@ -99,11 +99,11 @@ class PulsarMarker(BaseMarker):
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
 
         override_url = self.marker.kwargs.get(PulsarMarkerParams.ADMIN_URL.root(), self._admin_url)
-        service_url = override_url or self.config.getini(Configuration.PULSAR_ADMIN_URL)
+        admin_url = override_url or self.config.getini(Configuration.PULSAR_ADMIN_URL)
 
-        if not isinstance(service_url, str):
+        if not isinstance(admin_url, str):
             raise ValueError("Invalid specification for admin_url (str)")  # pragma: no cover
-        return service_url
+        return admin_url
 
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
