@@ -1,5 +1,5 @@
 ---
-name: Release
+name: release
 on:
   push:
     branches: [main]
@@ -20,14 +20,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install semantic-release and plugins
+      - name: install semantic-release and plugins
         run: |
           npm install -g semantic-release \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             @semantic-release/changelog \
             @semantic-release/git
-      - name: Run semantic-release
+      - name: run semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: semantic-release --branches main

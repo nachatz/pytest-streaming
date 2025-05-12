@@ -22,6 +22,6 @@ jobs:
           key: ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-fmt-${{ hashFiles('**/pyproject.toml') }}
-      - name: Run fmt
+      - name: run fmt
         run: |-
           just fmt

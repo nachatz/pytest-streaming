@@ -1,5 +1,5 @@
 ---
-name: Docs build
+name: docs build
 on:
   push:
     branches: [main]
@@ -20,6 +20,6 @@ jobs:
           key: ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
-      - name: Build and deploy docs
+      - name: build and deploy docs
         run: |-
           uv run mkdocs gh-deploy

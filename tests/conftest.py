@@ -3,7 +3,9 @@ from google.api_core.exceptions import NotFound
 from pytest import Config
 
 from pytest_streaming.pubsub.publisher import GCPPublisher
+from pytest_streaming.pulsar.client import PulsarClientWrapper
 from tests.pubsub.enums import PubsubProjectId
+from tests.settings import PulsarTestSettings
 
 pytest_plugins = ["pytester"]
 
@@ -22,8 +24,18 @@ def pubsub_project_ids() -> list[str]:
 
 
 @pytest.fixture(scope="session")
+def pulsar_settings() -> PulsarTestSettings:
+    return PulsarTestSettings()
+
+
+@pytest.fixture(scope="session")
 def publisher() -> GCPPublisher:
     return GCPPublisher()
+
+
+@pytest.fixture(scope="session")
+def pulsar_client(pulsar_settings: PulsarTestSettings) -> PulsarClientWrapper:
+    return PulsarClientWrapper(service_url=pulsar_settings.service_url, admin_url=pulsar_settings.admin_url)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -44,3 +56,14 @@ def destroy_pubsub_topics(pubsub_project_ids: list[str], publisher: GCPPublisher
                 publisher.delete_topic(topic=topic)
             except NotFound:
                 ...
+
+
+@pytest.fixture(scope="session", autouse=True)
+def destroy_pulsar_topics(pulsar_client: PulsarClientWrapper) -> None:
+    """Ensures the pulsar topics are cleaned up prior to the test suite running.
+
+    Args:
+        pulsar_client (fixture: PulsarClientWrapper): The Pulsar client instance to use for cleanup.
+    """
+    # TODO: add support for custom namespace and tenants
+    pulsar_client._delete_tenant(tenant="public")

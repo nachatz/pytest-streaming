@@ -19,6 +19,8 @@ classifiers = [
 ]
 dependencies = [
     "google-cloud-pubsub>=2.29.0",
+    "httpx>=0.28.1",
+    "pulsar-client>=3.5.0",
     "pytest>=8.3.5",
     "types-protobuf>=5.29.1.20250315",
 ]
@@ -38,6 +40,9 @@ dev = [
     "coverage>=7.7.1",
     "yamllint>=1.37.0",
     "yamlfix>=1.17.0",
+    "pydantic-settings>=2.9.1",
+    "pydantic>=2.11.3",
+    "dotenv>=0.9.9",
 ]
 
 [project.entry-points.pytest11]

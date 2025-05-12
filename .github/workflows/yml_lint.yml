@@ -22,6 +22,6 @@ jobs:
           key: ${{ runner.os }}-yml-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-yml-${{ hashFiles('**/pyproject.toml') }}
-      - name: Run yml lint
+      - name: run yml lint
         run: |-
           just yml-check
