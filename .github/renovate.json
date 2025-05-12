@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "autodiscover": false,
+  "repositories": [
+    "nachatz/pytest-streaming"
+  ],
+  "extends": [
+    "config:recommended"
+  ]
+}
