@@ -25,6 +25,7 @@ jobs:
       - name: run docker-compose
         run: |
           docker compose up -d
+          sleep 10s
       - name: run test
         run: |-
           just test
