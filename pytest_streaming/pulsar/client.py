@@ -7,9 +7,9 @@ from pulsar import Client as PulsarClient  # type: ignore[import-untyped]
 
 
 class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
-    USER_AGENT: str = "Pytest-Streaming"
+    USER_AGENT: str = "pytest-streaming"
     CONTENT_TYPE: str = "application/json"
-    CONNECTION_TIMEOUT_SECONDS: int = 30
+    CONNECTION_TIMEOUT_SECONDS: int = 5
 
     def __init__(self, service_url: str, admin_url: str) -> None:
         super().__init__(service_url=service_url)
