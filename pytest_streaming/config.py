@@ -15,6 +15,7 @@ class Configuration(StrEnum):
     PULSAR_GLOBAL_TOPICS = "pytest_streaming_pulsar_global_topics"
     PULSAR_GLOBAL_DELETE = "pytest_streaming_pulsar_global_delete"
     PULSAR_SERVICE_URL = "pytest_streaming_pulsar_service_url"
+    PULSAR_ADMIN_URL = "pytest_streaming_pulsar_admin_url"
     PULSAR_TENANT = "pytest_streaming_pulsar_tenant"
     PULSAR_NAMESPACE = "pytest_streaming_pulsar_namespace"
 
@@ -27,6 +28,7 @@ class Defaults(StrEnum):
 
     # Pulsar
     PULSAR_SERVICE_URL = "pulsar://localhost:6650"
+    PULSAR_ADMIN_URL = "http://localhost:8080"
     PULSAR_TENANT = "public"
     PULSAR_NAMESPACE = "default"
 

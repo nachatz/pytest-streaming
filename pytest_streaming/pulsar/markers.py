@@ -14,8 +14,11 @@ class PulsarMarkerParams(StrEnum):
     TOPICS = "topics=list"
     DELETE_AFTER = "delete_after=bool"
     SERVICE_URL = "service_url=str"
-    TENANT = "tenant=str"
-    NAMESPACE = "namespace=str"
+    ADMIN_URL = "admin_url=str"
+
+    # TODO: add support for tenant and namespace parameters
+    # TENANT = "tenant=str"
+    # NAMESPACE = "namespace=str"
 
     def root(self) -> str:
         return self.value.split("=")[0]
@@ -34,13 +37,12 @@ class PulsarMarker(BaseMarker):
     Optional Parameters:
         - delete_after (bool): If True, the topics will be deleted after the test. (default: False)
         - service_url (str): The Pulsar service URL. (default: from pytest.ini or Defaults.PULSAR_SERVICE_URL)
-        - tenant (str): The Pulsar tenant. (default: from pytest.ini or Defaults.PULSAR_TENANT)
-        - namespace (str): The Pulsar namespace. (default: from pytest.ini or Defaults.PULSAR_NAMESPACE)
+        - admin_url (str): The pulsar admin URL (default: from pytest.ini or Defaults.PULSAR_ADMIN_URL)
 
     Example:
         ```python
-        @pytest.mark.pulsar(topics=["topic-a", "topic-b"], delete_after=True, tenant="my-tenant")
-        def test_pulsar_topics(request, pytestconfig):
+        @pytest.mark.pulsar(topics=["topic-a", "topic-b"])
+        def test_pulsar_topics():
             # Your test code here
             pass
         ```
@@ -52,13 +54,13 @@ class PulsarMarker(BaseMarker):
         PulsarMarkerParams.TOPICS,
         PulsarMarkerParams.DELETE_AFTER,
         PulsarMarkerParams.SERVICE_URL,
-        PulsarMarkerParams.TENANT,
-        PulsarMarkerParams.NAMESPACE,
+        PulsarMarkerParams.ADMIN_URL,
     ]
 
     # Default values for the marker parameters
     _topics: None = None
     _service_url: None = None
+    _admin_url: None = None
     _delete_after: bool = False
     _tenant: str = "public"
     _namespace: str = "default"
@@ -83,37 +85,25 @@ class PulsarMarker(BaseMarker):
     def service_url(self) -> str:
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
-        
+
         override_url = self.marker.kwargs.get(PulsarMarkerParams.SERVICE_URL.root(), self._service_url)
         service_url = override_url or self.config.getini(Configuration.PULSAR_SERVICE_URL)
-        
+
         if not isinstance(service_url, str):
             raise ValueError("Invalid specification for service_url (str)")  # pragma: no cover
         return service_url
 
     @property
-    def tenant(self) -> str:
+    def admin_url(self) -> str:
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
-        
-        override_tenant = self.marker.kwargs.get(PulsarMarkerParams.TENANT.root(), self._tenant)
-        tenant = override_tenant or self.config.getini(Configuration.PULSAR_TENANT)
 
-        if not isinstance(tenant, str):
-            raise ValueError("Invalid specification for tenant (str)")  # pragma: no cover
-        return tenant
+        override_url = self.marker.kwargs.get(PulsarMarkerParams.ADMIN_URL.root(), self._admin_url)
+        service_url = override_url or self.config.getini(Configuration.PULSAR_ADMIN_URL)
 
-    @property
-    def namespace(self) -> str:
-        if not self.marker:
-            raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
-        
-        override_namespace = self.marker.kwargs.get(PulsarMarkerParams.NAMESPACE.root(), self._namespace)
-        namespace = override_namespace or self.config.getini(Configuration.PULSAR_NAMESPACE)
-        
-        if not isinstance(namespace, str):
-            raise ValueError("Invalid specification for namespace (str)")  # pragma: no cover
-        return namespace
+        if not isinstance(service_url, str):
+            raise ValueError("Invalid specification for admin_url (str)")  # pragma: no cover
+        return service_url
 
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
@@ -122,19 +112,21 @@ class PulsarMarker(BaseMarker):
             yield
             return
 
-        client = PulsarClientWrapper(service_url=self.service_url)
         try:
+            client = PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
             client.setup_testing_topics(
-                tenant=self.tenant,
-                namespace=self.namespace,
+                tenant=self._tenant,
+                namespace=self._namespace,
                 topics=self.topics,
             )
+
             yield
-        finally:
+
             if self.delete_after:
                 client.delete_testing_topics(
-                    tenant=self.tenant,
-                    namespace=self.namespace,
+                    tenant=self._tenant,
+                    namespace=self._namespace,
                     topics=self.topics,
                 )
-            client.close()  # Ensure admin client connection is closed
+        finally:
+            client.close()

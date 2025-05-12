@@ -8,6 +8,7 @@ from pytest import OptionGroup
 from pytest import Parser
 from pytest import Session
 
+from pytest_streaming.abstracts.markers import BaseMarker
 from pytest_streaming.pubsub.markers import PubsubMarker
 from pytest_streaming.pubsub.plugin import pubsub_addoption
 from pytest_streaming.pubsub.plugin import pubsub_sessionfinish
@@ -71,7 +72,7 @@ def _markers(request: FixtureRequest, pytestconfig: Config) -> Generator[None, N
         request: pytest fixture request object
         pytestconfig: pytest config object
     """
-    markers = [
+    markers: list[BaseMarker] = [
         PubsubMarker(config=pytestconfig, request=request),
         PulsarMarker(config=pytestconfig, request=request),
     ]

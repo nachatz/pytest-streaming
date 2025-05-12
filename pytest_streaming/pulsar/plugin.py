@@ -4,6 +4,7 @@ from pytest import Session
 
 from pytest_streaming.config import Configuration
 from pytest_streaming.config import Defaults
+from pytest_streaming.pulsar.client import PulsarClientWrapper
 
 
 def pulsar_addoption(parser: Parser) -> None:
@@ -31,6 +32,13 @@ def pulsar_addoption(parser: Parser) -> None:
     )
 
     parser.addini(
+        Configuration.PULSAR_ADMIN_URL,
+        "Pulsar admin URL",
+        type="string",
+        default=Defaults.PULSAR_ADMIN_URL,
+    )
+
+    parser.addini(
         Configuration.PULSAR_TENANT,
         "Pulsar tenant",
         type="string",
@@ -49,6 +57,7 @@ def pulsar_sessionstart(session: Session) -> None:
     """Creates global Pulsar topics if specified."""
     config: Config = session.config
     service_url = config.getini(Configuration.PULSAR_SERVICE_URL)
+    admin_url = config.getini(Configuration.PULSAR_ADMIN_URL)
     tenant = config.getini(Configuration.PULSAR_TENANT)
     namespace = config.getini(Configuration.PULSAR_NAMESPACE)
     global_topics = config.getini(Configuration.PULSAR_GLOBAL_TOPICS)
@@ -56,27 +65,26 @@ def pulsar_sessionstart(session: Session) -> None:
     if not global_topics:
         return
 
-    client = PulsarClientWrapper(service_url=service_url)
-    try:
-        client.setup_testing_topics(tenant, namespace, global_topics)
-    finally:
-        client.close()
+    client = PulsarClientWrapper(service_url=service_url, admin_url=admin_url)
+
+    client.setup_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
 
 
 def pulsar_sessionfinish(session: Session) -> None:
     """Deletes global Pulsar topics if configured."""
     config: Config = session.config
-    service_url = config.getini(Configuration.PULSAR_SERVICE_URL)
     tenant = config.getini(Configuration.PULSAR_TENANT)
     namespace = config.getini(Configuration.PULSAR_NAMESPACE)
+    service_url = config.getini(Configuration.PULSAR_SERVICE_URL)
+    admin_url = config.getini(Configuration.PULSAR_ADMIN_URL)
     global_topics = config.getini(Configuration.PULSAR_GLOBAL_TOPICS)
     cleanup_global = config.getini(Configuration.PULSAR_GLOBAL_DELETE)
 
     if not cleanup_global or not global_topics:
         return
 
-    client = PulsarClientWrapper(service_url=service_url)
+    client = PulsarClientWrapper(service_url=service_url, admin_url=admin_url)
     try:
-        client.delete_testing_topics(tenant, namespace, global_topics)
+        client.delete_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
     finally:
         client.close()

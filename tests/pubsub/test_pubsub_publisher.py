@@ -5,7 +5,7 @@ from pytest_streaming.pubsub.publisher import GCPPublisher
 from tests.pubsub.enums import PubsubProjectId
 
 
-class TestPublisher:
+class TestPubsubPublisher:
     def test_pubsub_topics_create(self, publisher: GCPPublisher) -> None:
         project_id = PubsubProjectId.PUBLISHER_CREATE
         topics = ["topic1", "topic2"]
