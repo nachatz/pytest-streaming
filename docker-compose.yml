@@ -1,17 +1,16 @@
----
 services:
   pubsub-emulator:
     image: google/cloud-sdk:latest
     command: gcloud beta emulators pubsub start --project=pytest-streaming --host-port=0.0.0.0:8432
-    ports: [8432:8432]
+    ports: ['8432:8432']
     environment:
       PUBSUB_PROJECT_ID: pytest-streaming
       PUBSUB_EMULATOR_HOST: localhost:8432
   pulsar:
     image: apachepulsar/pulsar:2.11.4@sha256:bb31af23830234770ed1468aef41f63f68daa59f090154d80c7ae1b9b72c4163
     container_name: pulsar
-    ports: [6650:6650, 8080:8080]
+    ports: ['6650:6650', '8080:8080']
     environment:
-      - PULSAR_STANDALONE_ENABLED=true
-      - allowAutoTopicCreation=true
+    - PULSAR_STANDALONE_ENABLED=true
+    - allowAutoTopicCreation=true
     command: [bin/pulsar, standalone]

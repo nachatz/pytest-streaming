@@ -1,0 +1,32 @@
+# https://github.com/google/yamlfmt/blob/main/docs/config-file.md
+line_ending: lf
+doublestar: true
+continue_on_error: false
+match_type: doublestar
+include:
+- "./**/*.{yaml,yml}"
+exclude:
+- "./.venv/**/*"
+gitignore_excludes: false
+gitignore_path: .gitignore
+regex_exclude: []
+extensions: []
+formatter:
+  type: basic
+  indent: 2
+  include_document_start: false
+  line_ending: lf
+  retain_line_breaks: true
+  retain_line_breaks_single: true
+  disallow_anchors: false
+  max_line_length: 0
+  scan_folded_as_literal: false
+  indentless_arrays: true
+  drop_merge_tag: false
+  pad_line_comments: 1
+  trim_trailing_whitespace: true
+  eof_newline: true
+  strip_directives: false
+  array_indent: 2
+  indent_root_array: false
+output_format: default
