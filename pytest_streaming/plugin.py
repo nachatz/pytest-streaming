@@ -8,10 +8,15 @@ from pytest import OptionGroup
 from pytest import Parser
 from pytest import Session
 
+from pytest_streaming.abstracts.markers import BaseMarker
 from pytest_streaming.pubsub.markers import PubsubMarker
 from pytest_streaming.pubsub.plugin import pubsub_addoption
 from pytest_streaming.pubsub.plugin import pubsub_sessionfinish
 from pytest_streaming.pubsub.plugin import pubsub_sessionstart
+from pytest_streaming.pulsar.markers import PulsarMarker
+from pytest_streaming.pulsar.plugin import pulsar_addoption
+from pytest_streaming.pulsar.plugin import pulsar_sessionfinish
+from pytest_streaming.pulsar.plugin import pulsar_sessionstart
 
 
 def pytest_addoption(parser: Parser) -> None:
@@ -25,6 +30,7 @@ def pytest_addoption(parser: Parser) -> None:
     """
     _: OptionGroup = parser.getgroup("pytest-streaming", "Streaming plugin options")
     pubsub_addoption(parser)
+    pulsar_addoption(parser)
 
 
 def pytest_sessionstart(session: Session) -> None:
@@ -34,6 +40,7 @@ def pytest_sessionstart(session: Session) -> None:
         session: pytest session object
     """
     pubsub_sessionstart(session)
+    pulsar_sessionstart(session)
 
 
 def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
@@ -43,6 +50,7 @@ def pytest_sessionfinish(session: Session, exitstatus: int) -> None:
         session: pytest session object
         exitstatus: exit status of the session
     """
+    pulsar_sessionfinish(session)
     pubsub_sessionfinish(session)
 
 
@@ -53,6 +61,7 @@ def pytest_configure(config: Config) -> None:
         config: pytest config object
     """
     config.addinivalue_line("markers", PubsubMarker.definition())
+    config.addinivalue_line("markers", PulsarMarker.definition())
 
 
 @pytest.fixture(autouse=True)
@@ -63,8 +72,9 @@ def _markers(request: FixtureRequest, pytestconfig: Config) -> Generator[None, N
         request: pytest fixture request object
         pytestconfig: pytest config object
     """
-    markers = [
+    markers: list[BaseMarker] = [
         PubsubMarker(config=pytestconfig, request=request),
+        PulsarMarker(config=pytestconfig, request=request),
     ]
 
     with ExitStack() as stack:
