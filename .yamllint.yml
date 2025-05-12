@@ -1,9 +1,0 @@
----
-extends: default
-rules:
-  line-length:
-    max: 100
-    level: warning
-  indentation: disable
-  new-lines: disable
-  truthy: disable
