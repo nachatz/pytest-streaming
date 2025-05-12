@@ -1,4 +1,3 @@
----
 name: docs build
 on:
   push:
@@ -7,19 +6,19 @@ jobs:
   build-docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: jdx/mise-action@v2
-        with:
-          cache: true
-      - name: Dependency cache
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
-      - name: build and deploy docs
-        run: |-
-          uv run mkdocs gh-deploy
+    - name: Checkout
+      uses: actions/checkout@v4
+    - uses: jdx/mise-action@v2
+      with:
+        cache: true
+    - name: Dependency cache
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
+    - name: build and deploy docs
+      run: |-
+        uv run mkdocs gh-deploy

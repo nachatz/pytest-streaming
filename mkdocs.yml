@@ -1,4 +1,3 @@
----
 # https://www.mkdocs.org/user-guide/configuration/
 site_name: pytest_streaming
 theme:
@@ -6,30 +5,30 @@ theme:
   logo: assets/icon.png
   favicon: assets/icon.png
   features:
-    - navigation.tabs
-    - navigation.footer
-    - content.code.copy
-    - content.code.annotate
+  - navigation.tabs
+  - navigation.footer
+  - content.code.copy
+  - content.code.annotate
   palette:
-    - scheme: slate
-      primary: black
+  - scheme: slate
+    primary: black
 docs_dir: docs
 repo_url: https://github.com/nachatz/pytest_streaming
 repo_name: pytest_streaming
 nav:
-  - Home: index.md
-  - Usage: usage.md
-  - Specification: specification.md
-  - Contributing:
-      - Contributing: contributing/contributing.md
-      - Setup: contributing/setup.md
-      - Development Stack: contributing/stack.md
-      - Testing: contributing/testing.md
+- Home: index.md
+- Usage: usage.md
+- Specification: specification.md
+- Contributing:
+  - Contributing: contributing/contributing.md
+  - Setup: contributing/setup.md
+  - Development Stack: contributing/stack.md
+  - Testing: contributing/testing.md
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences
