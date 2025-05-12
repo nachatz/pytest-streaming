@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":automergeMinor", 
+    ":automergePr", 
+    ":automergeRequireAllStatusChecks",  
+    ":enableVulnerabilityAlerts",
+    "schedule:nonOfficeHours",
+    "schedule:automergeNonOfficeHours" 
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true  
+  },
+  "timezone": "America/New_York"
+}
