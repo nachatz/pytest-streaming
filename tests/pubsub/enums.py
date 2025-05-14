@@ -4,6 +4,8 @@ from pytest_streaming.config import Defaults
 
 
 class PubsubProjectId(StrEnum):
+    """Project ids used across example and source testing"""
+
     DEFAULT = Defaults.PROJECT_ID.value
     GLOBAL_DELETE = "pytest-streaming-pubsub-global-delete"
 
@@ -15,6 +17,8 @@ class PubsubProjectId(StrEnum):
 
 
 class PubsubTopicName(StrEnum):
+    """Topics used across example and source testing."""
+
     GLOBAL_TOPIC_CREATE_ONE = "pytest-streaming-pubsub-global-create-topic-1"
     GLOBAL_TOPIC_CREATE_TWO = "pytest-streaming-pubsub-global-create-topic-2"
     GLOBAL_TOPIC_DELETE_ONE = "pytest-streaming-pubsub-global-delete-topic-1"

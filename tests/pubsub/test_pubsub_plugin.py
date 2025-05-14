@@ -25,7 +25,6 @@ class TestPubsubPlugin:
 
         topic_1 = gcp_publisher.topic_path(Defaults.PROJECT_ID.value, PubsubTopicName.GLOBAL_TOPIC_CREATE_ONE)
         topic_2 = gcp_publisher.topic_path(Defaults.PROJECT_ID.value, PubsubTopicName.GLOBAL_TOPIC_CREATE_TWO)
-
         assert topic_1 in found_topics
         assert topic_2 in found_topics
 
@@ -47,5 +46,4 @@ class TestPubsubPlugin:
         project_path = f"projects/{PubsubProjectId.GLOBAL_DELETE}"
         found_topics = gcp_publisher.list_topics(request={"project": project_path})
         found_topics = [topic.name for topic in found_topics]
-
         assert len(found_topics) == 0

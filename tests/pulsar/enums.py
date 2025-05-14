@@ -2,6 +2,8 @@ from enum import StrEnum
 
 
 class PulsarTopicName(StrEnum):
+    """Topics used across example and source testing."""
+
     GLOBAL_TOPIC_CREATE_ONE = "pytest-streaming-pulsar-global-create-topic-1"
     GLOBAL_TOPIC_CREATE_TWO = "pytest-streaming-pulsar-global-create-topic-2"
     GLOBAL_TOPIC_DELETE_ONE = "pytest-streaming-pulsar-global-delete-topic-1"

@@ -23,9 +23,7 @@ class TestPubsubPublisher:
 
         topic_path = gcp_publisher.topic_path(project=project_id, topic=topic)
         gcp_publisher.delete_testing_topics(project_id, [topic])
-
         gcp_publisher.create_topic(name=topic_path)
-
         gcp_publisher.setup_testing_topics(project_id, [topic])
         assert topic_path in [t.name for t in gcp_publisher.list_topics(request={"project": project_path})]
 
