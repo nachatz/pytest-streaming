@@ -26,8 +26,8 @@ class TestPulsarMarker:
         marker: Mark = node.get_closest_marker("pulsar")  # type: ignore
         topics: list[str] = marker.kwargs["topics"]
 
-        found_topics: list[str] = pulsar_client._get_topics(
-            tenant=Defaults.PULSAR_TENANT, namespace=Defaults.PULSAR_NAMESPACE
+        found_topics: list[str] = pulsar_client.client.get_topics(
+            tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
         for topic in topics:
             assert any(topic in found_topic for found_topic in found_topics)
@@ -42,8 +42,8 @@ class TestPulsarMarker:
         marker: Mark = node.get_closest_marker("pulsar")  # type: ignore
         topics: list[str] = marker.kwargs["topics"]
 
-        found_topics: list[str] = pulsar_client._get_topics(
-            tenant=Defaults.PULSAR_TENANT, namespace=Defaults.PULSAR_NAMESPACE
+        found_topics: list[str] = pulsar_client.client.get_topics(
+            tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
         for topic in topics:
             assert any(topic in found_topic for found_topic in found_topics)

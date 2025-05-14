@@ -1,0 +1,40 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      host:
+      - localhost:8080
+      user-agent:
+      - pytest-streaming
+    method: GET
+    uri: http://localhost:8080/admin/v2/persistent/public/default
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAA3IMQ6AIAwF0LuwN42rVzEOFappAtjQz+DtZXzvSK4jLKAdO7PPq1rmorfMCvYP
+        GqDAUGnWH/JZQwZJWaK8Fkp43TJt6fwBiQH7JUwAAAA=
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 14 May 2025 04:44:02 GMT
+      Server:
+      - Jetty(9.4.56.v20240826)
+      Vary:
+      - Accept-Encoding, User-Agent
+    status:
+      code: 200
+      message: OK
+version: 1

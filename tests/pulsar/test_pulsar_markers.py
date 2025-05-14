@@ -13,7 +13,9 @@ class TestPulsarMarkers:
 
         # no auto delete by default
         topics = [PulsarTopicName.MARKER_TOPIC_CREATE_ONE, PulsarTopicName.MARKER_TOPIC_CREATE_TWO]
-        found_topics = pulsar_client._get_topics(tenant=Defaults.PULSAR_TENANT, namespace=Defaults.PULSAR_NAMESPACE)
+        found_topics = pulsar_client.client.get_topics(
+            tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
+        )
         for topic in topics:
             assert any(topic in found_topic for found_topic in found_topics)
 
@@ -26,7 +28,9 @@ class TestPulsarMarkers:
 
         # ensure auto delete
         topics = [PulsarTopicName.MARKER_TOPIC_DELETE_ONE, PulsarTopicName.MARKER_TOPIC_DELETE_TWO]
-        found_topics = pulsar_client._get_topics(tenant=Defaults.PULSAR_TENANT, namespace=Defaults.PULSAR_NAMESPACE)
+        found_topics = pulsar_client.client.get_topics(
+            tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
+        )
         for topic in topics:
             assert all(topic not in found_topic for found_topic in found_topics)
 

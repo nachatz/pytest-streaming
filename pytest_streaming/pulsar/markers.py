@@ -5,6 +5,7 @@ from typing import cast
 
 from pytest_streaming.abstracts.markers import BaseMarker
 from pytest_streaming.config import Configuration
+from pytest_streaming.config import Defaults
 from pytest_streaming.pulsar.client import PulsarClientWrapper
 
 
@@ -50,27 +51,18 @@ class PulsarMarker(BaseMarker):
 
     marker_name: str = "pulsar"
     marker_description: str = "Create specified Pulsar topics automatically for the test."
-    marker_params: list[str] = [
-        PulsarMarkerParams.TOPICS,
-        PulsarMarkerParams.DELETE_AFTER,
-        PulsarMarkerParams.SERVICE_URL,
-        PulsarMarkerParams.ADMIN_URL,
-    ]
+    marker_params: list[str] = [param.value for param in PulsarMarkerParams]
 
     # Default values for the marker parameters
-    _topics: None = None
-    _service_url: None = None
-    _admin_url: None = None
-    _delete_after: bool = False
-    _tenant: str = "public"
-    _namespace: str = "default"
+    _tenant: str = Defaults.PULSAR_TENANT.value
+    _namespace: str = Defaults.PULSAR_NAMESPACE.value
 
     @property
     def topics(self) -> list[str]:
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
 
-        topics = self.marker.kwargs.get(PulsarMarkerParams.TOPICS.root(), self._topics)
+        topics = self.marker.kwargs.get(PulsarMarkerParams.TOPICS.root())
         if not topics or not isinstance(topics, list) or not all(isinstance(topic, str) for topic in topics):
             raise ValueError("No topics specified or invalid specification (list[str]) for the pulsar marker")
         return cast(list[str], topics)
@@ -79,16 +71,19 @@ class PulsarMarker(BaseMarker):
     def delete_after(self) -> bool:
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
-        return self.marker.kwargs.get(PulsarMarkerParams.DELETE_AFTER.root(), self._delete_after)
+
+        delete_after = self.marker.kwargs.get(PulsarMarkerParams.DELETE_AFTER.root(), Defaults.PULSAR_AUTO_DELETE.value)
+        if not isinstance(delete_after, bool):
+            raise ValueError("Invalid specification for delete_after (bool)")  # pragma: no cover
+        return delete_after
 
     @property
     def service_url(self) -> str:
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
 
-        override_url = self.marker.kwargs.get(PulsarMarkerParams.SERVICE_URL.root(), self._service_url)
+        override_url = self.marker.kwargs.get(PulsarMarkerParams.SERVICE_URL.root())
         service_url = override_url or self.config.getini(Configuration.PULSAR_SERVICE_URL)
-
         if not isinstance(service_url, str):
             raise ValueError("Invalid specification for service_url (str)")  # pragma: no cover
         return service_url
@@ -98,9 +93,8 @@ class PulsarMarker(BaseMarker):
         if not self.marker:
             raise ValueError("Marker (pulsar) is not set")  # pragma: no cover
 
-        override_url = self.marker.kwargs.get(PulsarMarkerParams.ADMIN_URL.root(), self._admin_url)
+        override_url = self.marker.kwargs.get(PulsarMarkerParams.ADMIN_URL.root())
         admin_url = override_url or self.config.getini(Configuration.PULSAR_ADMIN_URL)
-
         if not isinstance(admin_url, str):
             raise ValueError("Invalid specification for admin_url (str)")  # pragma: no cover
         return admin_url

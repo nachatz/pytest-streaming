@@ -41,6 +41,7 @@ dev = [
     "pydantic-settings>=2.9.1",
     "pydantic>=2.11.3",
     "dotenv>=0.9.9",
+    "pytest-vcr>=1.0.2",
 ]
 
 [project.entry-points.pytest11]

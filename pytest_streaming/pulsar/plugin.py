@@ -21,35 +21,35 @@ def pulsar_addoption(parser: Parser) -> None:
         Configuration.PULSAR_GLOBAL_DELETE,
         "Whether to delete global Pulsar topics after session finishes",
         type="bool",
-        default=False,
+        default=Defaults.PULSAR_AUTO_DELETE.value,
     )
 
     parser.addini(
         Configuration.PULSAR_SERVICE_URL,
         "Pulsar service URL",
         type="string",
-        default=Defaults.PULSAR_SERVICE_URL,
+        default=Defaults.PULSAR_SERVICE_URL.value,
     )
 
     parser.addini(
         Configuration.PULSAR_ADMIN_URL,
         "Pulsar admin URL",
         type="string",
-        default=Defaults.PULSAR_ADMIN_URL,
+        default=Defaults.PULSAR_ADMIN_URL.value,
     )
 
     parser.addini(
         Configuration.PULSAR_TENANT,
         "Pulsar tenant",
         type="string",
-        default=Defaults.PULSAR_TENANT,
+        default=Defaults.PULSAR_TENANT.value,
     )
 
     parser.addini(
         Configuration.PULSAR_NAMESPACE,
         "Pulsar namespace",
         type="string",
-        default=Defaults.PULSAR_NAMESPACE,
+        default=Defaults.PULSAR_NAMESPACE.value,
     )
 
 
@@ -66,8 +66,10 @@ def pulsar_sessionstart(session: Session) -> None:
         return
 
     client = PulsarClientWrapper(service_url=service_url, admin_url=admin_url)
-
-    client.setup_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
+    try:
+        client.setup_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
+    finally:
+        client.close()
 
 
 def pulsar_sessionfinish(session: Session) -> None:

@@ -9,14 +9,17 @@ from tests.pubsub.enums import PubsubProjectId
 
 
 class TestPubsubMarker:
+    @pytest.fixture
+    def publisher(self) -> PublisherClient:
+        return PublisherClient()
+
     @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"])
-    def test_pubsub_marker_topic_creation_base(self, request: FixtureRequest) -> None:
+    def test_pubsub_marker_topic_creation_base(self, request: FixtureRequest, publisher: PublisherClient) -> None:
         node: Node = request.node
         marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
 
-        project_id = Defaults.PROJECT_ID
-        publisher = PublisherClient()
+        project_id = Defaults.PROJECT_ID.value
         project_path = f"projects/{project_id}"
 
         found_topics = publisher.list_topics(request={"project": project_path})
@@ -26,16 +29,14 @@ class TestPubsubMarker:
 
         assert path_1 in found_topics
         assert path_2 in found_topics
-        assert project_id == Defaults.PROJECT_ID
+        assert project_id == Defaults.PROJECT_ID.value
 
     @pytest.mark.pubsub(topics=["test-topic1", "test-topic2"], project_id=PubsubProjectId.FIXTURE)
-    def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest) -> None:
+    def test_pubsub_marker_topic_creation_project_id(self, request: FixtureRequest, publisher: PublisherClient) -> None:
         node: Node = request.node
         marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
-
-        publisher = PublisherClient()
         project_path = f"projects/{project_id}"
 
         found_topics = publisher.list_topics(request={"project": project_path})
@@ -51,13 +52,12 @@ class TestPubsubMarker:
     @pytest.mark.pubsub(
         topics=["test-topic1", "test-topic2"], delete_after=True, project_id=PubsubProjectId.FIXTURE_DELETE
     )
-    def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest) -> None:
+    def test_pubsub_marker_topic_creation_autodelete(self, request: FixtureRequest, publisher: PublisherClient) -> None:
         node: Node = request.node
         marker: Mark = node.get_closest_marker("pubsub")  # type: ignore
         topics = marker.kwargs["topics"]
         project_id = marker.kwargs["project_id"]
 
-        publisher = PublisherClient()
         project_path = f"projects/{project_id}"
 
         found_topics = publisher.list_topics(request={"project": project_path})
