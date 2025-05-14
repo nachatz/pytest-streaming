@@ -18,7 +18,9 @@ class TestPubsubPlugin:
         result = pytester.runpytest("-k", "test_pulsar_global_create_topics")
         result.assert_outcomes(passed=1)
 
-        topics = pulsar_client._get_topics(namespace=Defaults.PULSAR_NAMESPACE, tenant=Defaults.PULSAR_TENANT)
+        topics = pulsar_client.client.get_topics(
+            namespace=Defaults.PULSAR_NAMESPACE.value, tenant=Defaults.PULSAR_TENANT.value
+        )
         assert any(PulsarTopicName.GLOBAL_TOPIC_CREATE_ONE in topic for topic in topics)
         assert any(PulsarTopicName.GLOBAL_TOPIC_CREATE_TWO in topic for topic in topics)
 
@@ -35,6 +37,8 @@ class TestPubsubPlugin:
         result = pytester.runpytest("-k", "test_pulsar_global_delete_topics")
         result.assert_outcomes(passed=1)
 
-        topics = pulsar_client._get_topics(namespace=Defaults.PULSAR_NAMESPACE, tenant=Defaults.PULSAR_TENANT)
+        topics = pulsar_client.client.get_topics(
+            namespace=Defaults.PULSAR_NAMESPACE.value, tenant=Defaults.PULSAR_TENANT.value
+        )
         assert all(PulsarTopicName.GLOBAL_TOPIC_DELETE_ONE not in topic for topic in topics)
         assert all(PulsarTopicName.GLOBAL_TOPIC_DELETE_TWO not in topic for topic in topics)

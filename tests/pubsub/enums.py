@@ -4,7 +4,7 @@ from pytest_streaming.config import Defaults
 
 
 class PubsubProjectId(StrEnum):
-    DEFAULT = Defaults.PROJECT_ID
+    DEFAULT = Defaults.PROJECT_ID.value
     GLOBAL_DELETE = "pytest-streaming-pubsub-global-delete"
 
     FIXTURE = "pytest-streaming-fixture-pubsub"

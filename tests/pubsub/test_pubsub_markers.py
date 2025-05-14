@@ -15,7 +15,7 @@ class TestPubsubMarkers:
         result = pytester.runpytest("-k", "test_pubsub_marker_topic_creation_project_id")
         result.assert_outcomes(passed=1)
 
-    def test_pubsub_marker_topic_creation_autodelete(self, pytester: Pytester, publisher: GCPPublisher) -> None:
+    def test_pubsub_marker_topic_creation_autodelete(self, pytester: Pytester, gcp_publisher: GCPPublisher) -> None:
         pytester.copy_example("test_pubsub_marker.py")
         result = pytester.runpytest("-k", "test_pubsub_marker_topic_creation_autodelete")
         result.assert_outcomes(passed=1)
@@ -23,7 +23,7 @@ class TestPubsubMarkers:
         project_id = PubsubProjectId.FIXTURE_DELETE
         project_path = f"projects/{project_id}"
 
-        found_topics = publisher.list_topics(request={"project": project_path})
+        found_topics = gcp_publisher.list_topics(request={"project": project_path})
         found_topics = [topic.name for topic in found_topics]
 
         assert len(list(found_topics)) == 0, "Topics were not deleted after test completion"

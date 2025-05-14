@@ -44,11 +44,7 @@ class PubsubMarker(BaseMarker):
 
     marker_name: str = "pubsub"
     marker_description: str = "Create specified Pub/Sub topics automatically for the test."
-    marker_params: list[str] = [
-        PubsubMarkerParams.TOPICS,
-        PubsubMarkerParams.DELETE_AFTER,
-        PubsubMarkerParams.PROJECT_ID,
-    ]
+    marker_params: list[str] = [param.value for param in PubsubMarkerParams]
 
     # Default values for the marker parameters
     _topics: None = None
@@ -69,7 +65,6 @@ class PubsubMarker(BaseMarker):
     def delete_after(self) -> bool:
         if not self.marker:
             raise ValueError("Marker (pubsub) is not set")  # pragma: no cover
-
         return self.marker.kwargs.get(PubsubMarkerParams.DELETE_AFTER.root(), self._delete_after)
 
     @property
@@ -81,7 +76,6 @@ class PubsubMarker(BaseMarker):
         project_id = override_project_id or self.config.getini(Configuration.PUBSUB_PROJECT_ID)
         if not isinstance(project_id, str):
             raise ValueError("Invalid specification for project_id (str)")  # pragma: no cover
-
         return project_id
 
     @contextmanager

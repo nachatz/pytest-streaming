@@ -37,3 +37,10 @@ class BaseMarker(ABC):
     @abstractmethod
     @contextmanager
     def impl(self) -> Generator[None, None, None]: ...
+
+    """This is the entry point for all markers. When a marker
+    is added to the context of the plugin, these are ran by default
+    for each valid implementation built.
+    
+    See `_markers` in the `plugin` entrypoint.
+    """

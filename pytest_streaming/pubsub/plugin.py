@@ -27,21 +27,21 @@ def pubsub_addoption(parser: Parser) -> None:
         Configuration.PUBSUB_GLOBAL_DELETE,
         "Whether to delete global topics after session finishes (True/False) - default is False",
         type="bool",
-        default=False,
+        default=Defaults.PUBSUB_GLOBAL_DELETE.value,
     )
 
     parser.addini(
         Configuration.PUBSUB_PROJECT_ID,
         "GCP project ID to use for Pub/Sub topics (local only) - default is 'default'",
         type="string",
-        default=Defaults.PROJECT_ID,
+        default=Defaults.PROJECT_ID.value,
     )
 
     parser.addini(
         Configuration.PUBSUB_EMULATOR_ENABLED,
         "Ensures the pubsub emulator is being used",
         type="bool",
-        default=True,
+        default=Defaults.PUBSUB_EMULATOR_ENABLED.value,
     )
 
 
