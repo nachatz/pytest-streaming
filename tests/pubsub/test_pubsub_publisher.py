@@ -16,6 +16,19 @@ class TestPubsubPublisher:
             topic_path = publisher.topic_path(project_id, topic)
             assert topic_path in [t.name for t in publisher.list_topics(request={"project": project_path})]
 
+    def test_pubsub_topics_create_clean(self, publisher: GCPPublisher) -> None:
+        project_id = PubsubProjectId.PUBLISHER_CREATE_CLEAN
+        topic = "topic1"
+        project_path = f"projects/{project_id}"
+
+        topic_path = publisher.topic_path(project=project_id, topic=topic)
+        publisher.delete_testing_topics(project_id, [topic])
+
+        publisher.create_topic(name=topic_path)
+
+        publisher.setup_testing_topics(project_id, [topic])
+        assert topic_path in [t.name for t in publisher.list_topics(request={"project": project_path})]
+
     def test_pubsub_topics_delete(self, publisher: GCPPublisher) -> None:
         project_id = PubsubProjectId.PUBLISHER_DELETE
         topics = ["topic1", "topic2"]

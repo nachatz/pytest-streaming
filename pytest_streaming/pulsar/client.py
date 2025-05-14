@@ -31,6 +31,11 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
 
     def setup_testing_topics(self, topics: list[str], tenant: str, namespace: str) -> None:
         for topic in topics:
+            self._delete_topic(topic_name=topic, tenant=tenant, namespace=namespace)
+            topics = self._get_topics(tenant=tenant, namespace=namespace)
+
+            if any(topic in t for t in topics):  # pragma: no cover
+                raise ValueError("Topic still exists and was not properly cleaned up prior to test run")
             self._create_topic(topic_name=topic, tenant=tenant, namespace=namespace)
 
     def delete_testing_topics(self, topics: list[str], tenant: str, namespace: str) -> None:
@@ -45,14 +50,6 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
         assert isinstance(res, list)
         return res
 
-    def _get_namespaces(self, tenant: str) -> list[str]:
-        url = URL(f"{self.admin_endpoint}/namespaces/{tenant}")
-        resp: Response = self.client.get(url)
-        assert resp.status_code == 200, f"Failed to get namespaces: {resp.text}"
-        res = resp.json()
-        assert isinstance(res, list)
-        return res
-
     def _create_topic(self, topic_name: str, tenant: str, namespace: str) -> None:
         topic = f"persistent://{tenant}/{namespace}/{topic_name}"
         self.create_producer(topic)
@@ -60,7 +57,7 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
     def _delete_topic(self, topic_name: str, tenant: str, namespace: str) -> None:
         url = URL(f"{self.admin_endpoint}/persistent/{tenant}/{namespace}/{topic_name}")
         resp = self.client.delete(url, params=QueryParams({"force": "true"}))
-        assert resp.status_code == 204, f"Failed to delete topic: {resp.text}"
+        assert resp.status_code in [204, 404], f"Failed to delete topic: {resp.text}"
 
     # FIXME: integrate this functionality and add coverage
     def _delete_namespace(self, tenant: str, namespace: str) -> None:  # pragma: no cover
@@ -75,6 +72,15 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
         url = URL(f"{self.admin_endpoint}/namespaces/{tenant}/{namespace}")
         resp = self.client.delete(url)
         assert resp.status_code in [204, 404], f"Failed to delete namespace: {resp.text}"
+
+    # FIXME: integrate this functionality and add coverage
+    def _get_namespaces(self, tenant: str) -> list[str]:  # pragma: no cover
+        url = URL(f"{self.admin_endpoint}/namespaces/{tenant}")
+        resp: Response = self.client.get(url)
+        assert resp.status_code == 200, f"Failed to get namespaces: {resp.text}"
+        res = resp.json()
+        assert isinstance(res, list)
+        return res
 
     # FIXME: integrate this functionality and add coverage
     def _delete_tenant(self, tenant: str) -> None:  # pragma: no cover

@@ -112,8 +112,8 @@ class PulsarMarker(BaseMarker):
             yield
             return
 
+        client = PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
         try:
-            client = PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
             client.setup_testing_topics(
                 tenant=self._tenant,
                 namespace=self._namespace,

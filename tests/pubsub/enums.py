@@ -10,6 +10,7 @@ class PubsubProjectId(StrEnum):
     FIXTURE = "pytest-streaming-fixture-pubsub"
     FIXTURE_DELETE = "pytest-streaming-fixture-pubsub-delete"
     PUBLISHER_CREATE = "pytest-streaming-publisher-pubsub-create"
+    PUBLISHER_CREATE_CLEAN = "pytest-streaming-publisher-pubsub-create-clean"
     PUBLISHER_DELETE = "pytest-streaming-publisher-pubsub-delete"
 
 
