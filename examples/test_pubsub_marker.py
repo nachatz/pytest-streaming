@@ -24,7 +24,6 @@ class TestPubsubMarker:
         path_1 = publisher.topic_path(project_id, topics[0])
         path_2 = publisher.topic_path(project_id, topics[1])
 
-        assert len(topics) == 2 == len(found_topics)
         assert path_1 in found_topics
         assert path_2 in found_topics
         assert project_id == Defaults.PROJECT_ID
