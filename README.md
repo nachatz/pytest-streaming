@@ -4,7 +4,7 @@ Pytest Streaming
 </h1>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nachatz/pytest-streaming/refs/heads/main/docs/assets/icon.png">
+<img src="docs/assets/icon.png" width="256" height="256">
 </p>
 
 <h3 align="center">
