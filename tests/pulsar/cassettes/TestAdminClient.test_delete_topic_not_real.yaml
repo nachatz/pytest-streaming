@@ -1,0 +1,34 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-type:
+      - application/json
+      host:
+      - localhost:8080
+      user-agent:
+      - pytest-streaming
+    method: DELETE
+    uri: http://localhost:8080/admin/v2/persistent/public/default/not%20real?force=true
+  response:
+    body:
+      string: '{"reason":"Topic persistent://public/default/not real not found"}'
+    headers:
+      Content-Length:
+      - '65'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 14 May 2025 04:44:02 GMT
+      Server:
+      - Jetty(9.4.56.v20240826)
+    status:
+      code: 404
+      message: Topic persistent://public/default/not real not found
+version: 1
