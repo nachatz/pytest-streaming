@@ -26,7 +26,7 @@ Detailed specifications and usage can be found here
 If you're using docker compose, adding this for pulsar will get you
 up and running end to end (`docker-compose.yml`)
 
-```yml
+```yaml
 services:
   pulsar:
     image: apachepulsar/pulsar:latest
@@ -53,6 +53,7 @@ class TestPulsarProducer:
     @pytest.mark.pulsar(topics=["test-topic1", "test-topic2"])
     def test_pubsub_marker_topic_creation_base(self) -> None:
         # these pulsar topics are now available and completely clean
+        # note these live by default in `public/default` namespace
         ...
 ```
 
@@ -69,7 +70,7 @@ Running this in CI/CD is as simple as ensuring pulsar (or other streaming choice
 is running in the network. For the example above, adding this step to your GitHub action
 will yield all the setup required
 
-```yml
+```yaml
 - name: run docker-compose
     run: |
     docker compose up -d
@@ -77,4 +78,3 @@ will yield all the setup required
 ```
 
 &#160;
-
