@@ -1,4 +1,3 @@
-
 <h1 align="center">
 Pytest Streaming
 </h1>
@@ -17,6 +16,7 @@ Augmenting and simplifying the flow of testing streaming applications including 
 [![Formatting](https://github.com/nachatz/pytest-streaming/actions/workflows/fmt.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/fmt.yml)
 [![Typing](https://github.com/nachatz/pytest-streaming/actions/workflows/mypy.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/mypy.yml)
 [![Docs](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yaml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yaml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 </div>
 
@@ -26,13 +26,14 @@ Augmenting and simplifying the flow of testing streaming applications including 
 ![Pytest](https://img.shields.io/badge/pytest-%23ffffff.svg?style=for-the-badge&logo=pytest&logoColor=2f9fe3)
 ![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
-[![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
 
 </div>
 
+## Documentation
+
+PyTest streaming documentation can be found [here](nachatz.github.io/pytest-streaming).
 
 ## Description
-
 
 This PyTest plugin makes it easy to test streaming functionality (unit, integration, test, etc) through
 seamless and easy to use decorators. The plugin currently supports bootstrapping of resources for the following
@@ -40,34 +41,34 @@ technologies
 
 1. [Apache Pulsar](https://pulsar.apache.org/)
 2. [Google PubSub](https://cloud.google.com/pubsub)
-3. [\[Coming soon\] Kafka](https://kafka.apache.org/)
-4. [\[Coming soon\] Nats](https://nats.io/)
-5. [\[Coming soon\] Kinesis](https://aws.amazon.com/kinesis/)
+3. [[Coming soon] Kafka](https://kafka.apache.org/)
+4. [[Coming soon] Nats](https://nats.io/)
+5. [[Coming soon] Kinesis](https://aws.amazon.com/kinesis/)
 
 The only setup the user needs to take is to have these running locally (ideally via Docker). Docker compose
 files are provided for each of these, with formal documentation on how to setup everything easily in
 CI/CD as well.
 
-&nbsp;
+&#160;
 
 ## Quick start
 
-To get started, you should reference the extensive documentation page found [here](nachatz.github.io/pytest-streaming). 
+To get started, you should reference the extensive documentation page found [here](nachatz.github.io/pytest-streaming).
 
 For a quick start, you can follow these steps
 
-1. Install pytest-streaming
+### Install pytest-streaming
 
-`pip install pytest-streaming`
+```shell
+pip install pytest-streaming
+```
 
+&#160;
 
-&nbsp;
-
-2. Utilize the decorator for the streaming technology of your choice
+### Utilize the decorator for the streaming technology of your choice
 
 If you're using docker compose, adding this for pulsar will get you
 up and running end to end (`docker-compose.yml`)
-
 
 ```yml
 services:
@@ -98,9 +99,9 @@ test run. Each decorator has a suite of customizable features. Read the
 [documentation](nachatz.github.io/pytest-streaming) to see other parameters you can use and how you can create
 topics for global use (integration tests).
 
-&nbsp;
+&#160;
 
-3. Adding to your CI/CD 
+### Adding to your CI/CD
 
 Running this in CI/CD is as simple and ensuring pulsar (or other streaming choice)
 is running in the network. For the example above, adding this step to your GitHub action
@@ -112,3 +113,11 @@ will yield all the setup required
     docker compose up -d
     sleep 5s
 ```
+
+&#160;
+
+## Examples
+
+A suite of examples which are provided and ran within the test suite directly
+to verify functionality. These can be found under the [`examples`](./examples/) directory
+at the root level of this project.
