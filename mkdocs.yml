@@ -17,7 +17,10 @@ repo_url: https://github.com/nachatz/pytest_streaming
 repo_name: pytest_streaming
 nav:
 - Home: index.md
-- Usage: usage.md
+- Usage:
+  - Getting Started: usage/getting_started.md
+  - Pulsar: usage/pulsar.md
+  - Pubsub: usage/pubsub.md
 - Specification: specification.md
 - Contributing:
   - Contributing: contributing/contributing.md
