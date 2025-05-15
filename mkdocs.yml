@@ -21,7 +21,6 @@ nav:
   - Getting Started: usage/getting_started.md
   - Pulsar: usage/pulsar.md
   - Pubsub: usage/pubsub.md
-- Specification: specification.md
 - Contributing:
   - Contributing: contributing/contributing.md
   - Setup: contributing/setup.md
