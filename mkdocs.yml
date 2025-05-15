@@ -1,5 +1,5 @@
 # https://www.mkdocs.org/user-guide/configuration/
-site_name: pytest_streaming
+site_name: PyTest Streaming
 theme:
   name: material
   logo: assets/icon.png
@@ -17,8 +17,10 @@ repo_url: https://github.com/nachatz/pytest_streaming
 repo_name: pytest_streaming
 nav:
 - Home: index.md
-- Usage: usage.md
-- Specification: specification.md
+- Usage:
+  - Getting Started: usage/getting_started.md
+  - Pulsar: usage/pulsar.md
+  - Pubsub: usage/pubsub.md
 - Contributing:
   - Contributing: contributing/contributing.md
   - Setup: contributing/setup.md
