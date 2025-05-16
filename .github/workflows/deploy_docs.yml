@@ -9,7 +9,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
-        persist-credentials: false
+        persist-credentials: true
     - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2
       with:
         cache: true
