@@ -26,6 +26,7 @@ nav:
   - Setup: contributing/setup.md
   - Development Stack: contributing/stack.md
   - Testing: contributing/testing.md
+- Releases: releases.md
 markdown_extensions:
 - pymdownx.highlight:
     anchor_linenums: true
