@@ -4,7 +4,5 @@
   "repositories": [
     "nachatz/pytest-streaming"
   ],
-  "extends": [
-    "config:recommended"
-  ]
+  "extends": ["config:recommended", ":disableDependencyDashboard"]
 }

@@ -6,8 +6,9 @@
     ":automergePr", 
     ":automergeRequireAllStatusChecks",  
     ":enableVulnerabilityAlerts",
+    ":disableDependencyDashboard",
     "schedule:nonOfficeHours",
-    "schedule:automergeNonOfficeHours" 
+    "schedule:automergeNonOfficeHours"
   ],
   "lockFileMaintenance": {
     "enabled": true,

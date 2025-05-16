@@ -19,14 +19,25 @@ jobs:
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: 18
+    - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2
+      with:
+        cache: true
+    - name: Dependency cache
+      id: cache
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+      with:
+        path: .venv
+        key: ${{ runner.os }}-release-${{ hashFiles('**/pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-release-${{ hashFiles('**/pyproject.toml') }}
     - name: install semantic-release and plugins
       run: |
         npm install -g semantic-release \
-          @semantic-release/commit-analyzer \
-          @semantic-release/release-notes-generator \
           @semantic-release/changelog \
-          @semantic-release/git
+          @semantic-release/git \
+          @semantic-release-pypi
     - name: run semantic-release
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       run: semantic-release --branches main
