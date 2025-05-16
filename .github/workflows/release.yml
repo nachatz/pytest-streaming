@@ -35,7 +35,7 @@ jobs:
         npm install -g semantic-release \
           @semantic-release/changelog \
           @semantic-release/git \
-          @semantic-release-pypi
+          semantic-release-pypi
     - name: run semantic-release
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
