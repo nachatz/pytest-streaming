@@ -59,7 +59,7 @@ class TestPulsarProducer:
 
 Everything will be created and cleaned up for you by default on every
 test run. Each decorator has a suite of customizable features. Read the
-[documentation](nachatz.github.io/pytest-streaming) to see other parameters you can use and how you can create
+[documentation](https://nachatz.github.io/pytest-streaming) to see other parameters you can use and how you can create
 topics for global use (integration tests).
 
 &#160;

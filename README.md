@@ -3,7 +3,7 @@ Pytest Streaming
 </h1>
 
 <p align="center">
-<img src="docs/assets/icon.png" width="256" height="256">
+<img src="https://raw.githubusercontent.com/nachatz/pytest-streaming/main/docs/assets/icon.png" width="256" height="256">
 </p>
 
 <h3 align="center">
@@ -31,7 +31,7 @@ Augmenting and simplifying the flow of testing streaming applications including 
 
 ## Documentation
 
-PyTest streaming documentation can be found [here](nachatz.github.io/pytest-streaming).
+PyTest streaming documentation can be found [here](https://nachatz.github.io/pytest-streaming).
 
 ## Description
 
@@ -53,7 +53,7 @@ CI/CD as well.
 
 ## Quick start
 
-To get started, you should reference the extensive documentation page found [here](nachatz.github.io/pytest-streaming).
+To get started, you should reference the extensive documentation page found [here](https://nachatz.github.io/pytest-streaming).
 
 For a quick start, you can follow these steps
 
@@ -96,7 +96,7 @@ class TestPulsarProducer:
 
 Everything will be created and cleaned up for you by default on every
 test run. Each decorator has a suite of customizable features. Read the
-[documentation](nachatz.github.io/pytest-streaming) to see other parameters you can use and how you can create
+[documentation](https://nachatz.github.io/pytest-streaming) to see other parameters you can use and how you can create
 topics for global use (integration tests).
 
 &#160;
