@@ -22,6 +22,17 @@ It's generally recommended to bootstrap global topics for integration tests (to 
 
 &#160;
 
+## Supported 
+
+1. [Apache Pulsar](https://pulsar.apache.org/)
+2. [Google PubSub](https://cloud.google.com/pubsub)
+3. [[Coming soon] Kafka](https://kafka.apache.org/)
+4. [[Coming soon] Nats](https://nats.io/)
+5. [[Coming soon] Kinesis](https://aws.amazon.com/kinesis/)
+
+
+&#160;
+
 ## Feedback and requests
 
 Feedback, feature requests, and bug reports are welcome. Please open an issue or discussion on the [GitHub repository](https://github.com/nachatz/pytest-streaming).

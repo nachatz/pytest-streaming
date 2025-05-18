@@ -15,6 +15,12 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Testing",
+    "Typing :: Typed",
     "Framework :: Pytest",
 ]
 dependencies = [
