@@ -26,6 +26,11 @@ class PubsubMarker(BaseMarker):
     It is used to set up the environment for tests that require Pub/Sub topics.
     By default, the topics are CREATE_OR_REPLACED, meaning that if they already exist, they will be replaced.
 
+    Attributes:
+        - topics (list[str]): A list of Pub/Sub topic names to create. (default: None)
+        - delete_after (bool): If True, the topics will be deleted after the test. (default: False)
+        - project_id (str): The GCP project ID where the topics will be created. (default: None)
+
     Required Parameters:
         - topics (list[str]): A list of Pub/Sub topic names to create. (default: None)
 
@@ -80,7 +85,6 @@ class PubsubMarker(BaseMarker):
 
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
-        """Creates and optionally deletes Pub/Sub topics for tests with the pubsub marker."""
         if not self.marker:
             yield
             return

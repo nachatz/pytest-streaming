@@ -119,7 +119,6 @@ class PulsarMarker(BaseMarker):
 
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
-        """Creates and optionally deletes Pulsar topics for tests with the pulsar marker."""
         if not self.marker:
             yield
             return

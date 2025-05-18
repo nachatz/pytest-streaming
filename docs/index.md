@@ -22,14 +22,13 @@ It's generally recommended to bootstrap global topics for integration tests (to 
 
 &#160;
 
-## Supported 
+## Supported
 
 1. [Apache Pulsar](https://pulsar.apache.org/)
 2. [Google PubSub](https://cloud.google.com/pubsub)
 3. [[Coming soon] Kafka](https://kafka.apache.org/)
 4. [[Coming soon] Nats](https://nats.io/)
 5. [[Coming soon] Kinesis](https://aws.amazon.com/kinesis/)
-
 
 &#160;
 

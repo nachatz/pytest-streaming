@@ -17,11 +17,7 @@ def streaming_pulsar_marker(request: FixtureRequest, pytestconfig: Config) -> Pu
     """Usable PulsarMarker object
 
     Yields the base pulsar marker object that gives you access to the designated
-    configurations for the individual test
-
-    Args:
-        request (FixtureRequest -- auto requested): pytest fixture request
-        pytestconfig (Config -- auto requested): pytest config context object
+    configurations for the individual test. See PulsarMarker specification.
 
     Example:
         ```python
@@ -44,9 +40,6 @@ def streaming_pulsar_client(streaming_pulsar_marker: PulsarMarker) -> Generator[
     """Raw pulsar client using the service url configured for the given test.
 
     Does all of the necessary cleanup for you after the test concludes.
-
-    Args:
-        streaming_pulsar_marker (PulsarMarker -- auto requested): pulsar marker used in the scope of this test
 
     Example:
         ```python
@@ -74,10 +67,6 @@ def streaming_pulsar_consumer(
     """Raw pulsar consumer using the topics configured for the given test. Yields a unique subscription name each time.
 
     Does all of the necessary cleanup for you after the test concludes.
-
-    Args:
-        streaming_pulsar_marker (PulsarMarker -- auto requested): pulsar marker used in the scope of this test
-        streaming_pulsar_client (Client -- auto requested): raw pulsar client from the base pulsar library
 
     Example:
         ```python
@@ -108,10 +97,6 @@ def streaming_pulsar_producers(
     """Raw pulsar producer using the topics configured for the given test.
 
     Does all of the necessary cleanup for you after the test concludes.
-
-    Args:
-        streaming_pulsar_marker (PulsarMarker -- auto requested): pulsar marker used in the scope of this test
-        streaming_pulsar_client (Client -- auto requested): raw pulsar client from the base pulsar library
 
     Example:
         ```python
