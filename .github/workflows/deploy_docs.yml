@@ -1,7 +1,7 @@
 name: docs build
 on:
   push:
-    branches: [main]
+    branches: [fix/docs]
 
 permissions:
   contents: write
@@ -27,6 +27,6 @@ jobs:
           ${{ runner.os }}-docs-${{ hashFiles('**/pyproject.toml') }}
     - name: build and deploy docs
       run: |-
-        uv run mkdocs gh-deploy
+        uv run mkdocs gh-deploy --force
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
