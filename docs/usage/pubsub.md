@@ -2,6 +2,8 @@
 
 This section describes how to use the Pub/Sub integration in `pytest-streaming` for managing topics in your tests. The plugin supports both global and per-test topic management using either `pytest.ini` configuration or test markers.
 
+View the specification for verbose details on all usable interfaces of this [library](./../specification/pubsub.md)
+
 &#160;
 
 ## PubSub Marker Usage
