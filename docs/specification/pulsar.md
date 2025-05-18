@@ -9,5 +9,3 @@
 ## Markers
 
 ::: pytest_streaming.pulsar.markers.PulsarMarker
-options:
-filters: "^impl"
