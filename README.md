@@ -1,5 +1,5 @@
 <h1 align="center">
-test Pytest Streaming
+Pytest Streaming
 </h1>
 
 <p align="center">
