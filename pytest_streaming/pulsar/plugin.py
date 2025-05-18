@@ -4,6 +4,7 @@ from pytest import Session
 
 from pytest_streaming.config import Configuration
 from pytest_streaming.config import Defaults
+from pytest_streaming.pulsar._models import TopicMeta
 from pytest_streaming.pulsar.client import PulsarClientWrapper
 
 
@@ -67,7 +68,8 @@ def pulsar_sessionstart(session: Session) -> None:
 
     client = PulsarClientWrapper(service_url=service_url, admin_url=admin_url)
     try:
-        client.setup_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
+        topics = [TopicMeta(topic_name=topic, tenant=tenant, namespace=namespace) for topic in global_topics]
+        client.setup_testing_topics(topics=topics)
     finally:
         client.close()
 
@@ -87,6 +89,7 @@ def pulsar_sessionfinish(session: Session) -> None:
 
     client = PulsarClientWrapper(service_url=service_url, admin_url=admin_url)
     try:
-        client.delete_testing_topics(topics=global_topics, tenant=tenant, namespace=namespace)
+        topics = [TopicMeta(topic_name=topic, tenant=tenant, namespace=namespace) for topic in global_topics]
+        client.delete_testing_topics(topics=topics)
     finally:
         client.close()

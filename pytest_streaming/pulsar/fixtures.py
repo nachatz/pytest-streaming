@@ -8,7 +8,7 @@ from pulsar import Producer
 from pytest import Config
 from pytest import FixtureRequest
 
-from pytest_streaming.pulsar._models import TopicName
+from pytest_streaming.pulsar._models import TopicMeta
 from pytest_streaming.pulsar.markers import PulsarMarker
 
 
@@ -131,7 +131,7 @@ def streaming_pulsar_producers(
 
     # TODO: update to property w/ support for dynamic tenant/namespace
     topic_objs = [
-        TopicName(
+        TopicMeta(
             topic_name=topic, tenant=streaming_pulsar_marker._tenant, namespace=streaming_pulsar_marker._namespace
         )
         for topic in streaming_pulsar_marker.topics

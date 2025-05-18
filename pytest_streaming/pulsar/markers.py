@@ -7,6 +7,7 @@ from typing import cast
 from pytest_streaming.abstracts.markers import BaseMarker
 from pytest_streaming.config import Configuration
 from pytest_streaming.config import Defaults
+from pytest_streaming.pulsar._models import TopicMeta
 from pytest_streaming.pulsar.client import PulsarClientWrapper
 
 
@@ -108,6 +109,10 @@ class PulsarMarker(BaseMarker):
             raise ValueError("Invalid specification for admin_url (str)")  # pragma: no cover
         return admin_url
 
+    @property
+    def _topic_meta(self) -> list[TopicMeta]:
+        return [TopicMeta(topic_name=topic, tenant=self._tenant, namespace=self._namespace) for topic in self.topics]
+
     @cached_property
     def _pulsar_client(self) -> PulsarClientWrapper:
         return PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
@@ -120,19 +125,11 @@ class PulsarMarker(BaseMarker):
             return
 
         try:
-            self._pulsar_client.setup_testing_topics(
-                tenant=self._tenant,
-                namespace=self._namespace,
-                topics=self.topics,
-            )
+            self._pulsar_client.setup_testing_topics(topics=self._topic_meta)
 
             yield
 
             if self.delete_after:
-                self._pulsar_client.delete_testing_topics(
-                    tenant=self._tenant,
-                    namespace=self._namespace,
-                    topics=self.topics,
-                )
+                self._pulsar_client.delete_testing_topics(topics=self._topic_meta)
         finally:
             self._pulsar_client.close()

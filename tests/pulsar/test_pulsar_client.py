@@ -3,6 +3,7 @@ from httpx import URL
 from pytest_mock import MockerFixture
 
 from pytest_streaming.config import Defaults
+from pytest_streaming.pulsar._models import TopicMeta
 from pytest_streaming.pulsar.client import AdminClient
 from pytest_streaming.pulsar.client import PulsarClientWrapper
 from tests.pulsar.enums import PulsarTopicName
@@ -29,18 +30,20 @@ class TestAdminClient:
         pulsar_client: PulsarClientWrapper,
     ) -> None:
         topic = PulsarTopicName.ADMIN_CLIENT_TOPIC_CREATE_ONE
-        pulsar_client._create_topic(
+        topic_meta = TopicMeta(
             topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
+        pulsar_client._create_topic(topic=topic_meta)
 
         found_topics = pulsar_admin_client.get_topics(
             tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
         assert any(topic in found_topic for found_topic in found_topics)
 
-        pulsar_admin_client.delete_topic(
+        topic_meta = TopicMeta(
             topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
+        pulsar_admin_client.delete_topic(topic=topic_meta)
 
         found_topics = pulsar_admin_client.get_topics(
             tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
@@ -49,9 +52,10 @@ class TestAdminClient:
 
     @pytest.mark.vcr()
     def test_delete_topic_not_real(self, pulsar_admin_client: AdminClient) -> None:
-        pulsar_admin_client.delete_topic(
+        topic_meta = TopicMeta(
             topic_name="not real", tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )
+        pulsar_admin_client.delete_topic(topic=topic_meta)
 
 
 class TestPulsarClientWrapper:
@@ -66,9 +70,11 @@ class TestPulsarClientWrapper:
             pulsar_client, PulsarClientWrapper._create_topic.__name__, return_value=None
         )
 
-        pulsar_client.setup_testing_topics(
-            topics=topics, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
-        )
+        topic_meta = [
+            TopicMeta(topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value)
+            for topic in topics
+        ]
+        pulsar_client.setup_testing_topics(topics=topic_meta)
         assert delete_topic_mock.call_count == 2
         assert create_topic_mock.call_count == 2
 
@@ -84,9 +90,13 @@ class TestPulsarClientWrapper:
         mocker.patch.object(pulsar_client, PulsarClientWrapper._create_topic.__name__, return_value=None)
 
         with pytest.raises(ValueError):
-            pulsar_client.setup_testing_topics(
-                topics=topics, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
-            )
+            topic_meta = [
+                TopicMeta(
+                    topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
+                )
+                for topic in topics
+            ]
+            pulsar_client.setup_testing_topics(topics=topic_meta)
 
     def test_delete_testing_topics(self, pulsar_client: PulsarClientWrapper, mocker: MockerFixture) -> None:
         topics = ["fake", "topics"]
@@ -95,7 +105,9 @@ class TestPulsarClientWrapper:
             pulsar_client.client, AdminClient.delete_topic.__name__, return_value=None
         )
 
-        pulsar_client.delete_testing_topics(
-            topics=topics, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
-        )
+        topic_meta = [
+            TopicMeta(topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value)
+            for topic in topics
+        ]
+        pulsar_client.delete_testing_topics(topics=topic_meta)
         assert delete_topic_mock.call_count == 2

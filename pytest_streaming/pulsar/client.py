@@ -5,7 +5,7 @@ from httpx import QueryParams
 from httpx import Response
 from pulsar import Client as PulsarClient  # type: ignore[import-untyped]
 
-from pytest_streaming.pulsar._models import TopicName
+from pytest_streaming.pulsar._models import TopicMeta
 
 
 class AdminClient(HttpxClient):
@@ -34,8 +34,8 @@ class AdminClient(HttpxClient):
         assert isinstance(res, list)
         return res
 
-    def delete_topic(self, topic_name: str, tenant: str, namespace: str) -> None:
-        url = URL(f"/persistent/{tenant}/{namespace}/{topic_name}")
+    def delete_topic(self, topic: TopicMeta) -> None:
+        url = URL(topic.path)
         resp = self.delete(url, params=QueryParams({"force": "true"}))
         assert resp.status_code in [204, 404], f"Failed to delete topic: {resp.text}"
 
@@ -52,7 +52,8 @@ class AdminClient(HttpxClient):
     def _delete_namespace(self, tenant: str, namespace: str) -> None:  # pragma: no cover
         topics = self.get_topics(tenant=tenant, namespace=namespace)
         for topic in topics:
-            self.delete_topic(topic_name=topic.split("/")[-1], tenant=tenant, namespace=namespace)
+            topic_meta = TopicMeta(topic_name=topic.split("/")[-1], tenant=tenant, namespace=namespace)
+            self.delete_topic(topic=topic_meta)
 
         # never delete the default namespace
         if namespace == "default":
@@ -87,19 +88,18 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
         self.admin_url = admin_url
         self.client = AdminClient(base_url=self.admin_url)
 
-    def setup_testing_topics(self, topics: list[str], tenant: str, namespace: str) -> None:
+    def setup_testing_topics(self, topics: list[TopicMeta]) -> None:
         for topic in topics:
-            self.client.delete_topic(topic_name=topic, tenant=tenant, namespace=namespace)
-            topics = self.client.get_topics(tenant=tenant, namespace=namespace)
+            self.client.delete_topic(topic=topic)
+            found_topics = self.client.get_topics(tenant=topic.tenant, namespace=topic.namespace)
 
-            if any(topic in t for t in topics):  # pragma: no cover
+            if any(topic.short in t for t in found_topics):  # pragma: no cover
                 raise ValueError("Topic still exists and was not properly cleaned up prior to test run")
-            self._create_topic(topic_name=topic, tenant=tenant, namespace=namespace)
+            self._create_topic(topic=topic)
 
-    def delete_testing_topics(self, topics: list[str], tenant: str, namespace: str) -> None:
+    def delete_testing_topics(self, topics: list[TopicMeta]) -> None:
         for topic in topics:
-            self.client.delete_topic(topic_name=topic, tenant=tenant, namespace=namespace)
+            self.client.delete_topic(topic=topic)
 
-    def _create_topic(self, topic_name: str, tenant: str, namespace: str) -> None:
-        topic = TopicName(topic_name=topic_name, tenant=tenant, namespace=namespace)
+    def _create_topic(self, topic: TopicMeta) -> None:
         self.create_producer(topic.long)
