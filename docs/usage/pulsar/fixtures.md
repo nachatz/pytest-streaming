@@ -13,9 +13,10 @@ Yields a `PulsarMarker` object, which encapsulates all marker-based configuratio
 - `topics` (list[str]): A list of Pulsar topic names created.
 - `delete_after` (bool): Whether or not topics are deleted after this test concludes.
 - `service_url` (str): The Pulsar service URL.
-- `admin_url` (str): The Pulsar admin URL. 
+- `admin_url` (str): The Pulsar admin URL.
 
 **Usage Example:**
+
 ```python
 from streaming.pulsar.markers import PulsarMarker
 
@@ -29,6 +30,7 @@ def test_pulsar_topics(streaming_pulsar_marker: PulsarMarker):
 Yields a raw Pulsar client, configured using the service URL from the current marker or global configuration. The client is automatically cleaned up after the test completes.
 
 **Usage Example:**
+
 ```python
 from pulsar import Client
 
@@ -44,6 +46,7 @@ Yields a Pulsar consumer, subscribed to the topics specified in the marker. Each
 **Type:** `pulsar.Consumer`
 
 **Usage Example:**
+
 ```python
 from pulsar import Consumer
 
@@ -60,6 +63,7 @@ Yields a dictionary mapping topic names to Pulsar producer instances, one for ea
 **Type:** `dict[str, pulsar.Producer]`
 
 **Usage Example:**
+
 ```python
 from pulsar import Producer
 
