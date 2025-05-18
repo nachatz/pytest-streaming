@@ -32,6 +32,9 @@ nav:
   - Development Stack: contributing/stack.md
   - Testing: contributing/testing.md
 - Releases: releases.md
+- Specification:
+  - Pubsub: specification/pubsub.md
+  - Pulsar: specification/pulsar.md
 markdown_extensions:
 - pymdownx.highlight:
     anchor_linenums: true
@@ -40,3 +43,19 @@ markdown_extensions:
 - pymdownx.inlinehilite
 - pymdownx.snippets
 - pymdownx.superfences
+- admonition
+- toc
+
+# https://mkdocstrings.github.io/python/usage/configuration/general/
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          members_order: source
+          docstring_style: google
+          docstring_section_style: table
+          summary: true
+          show_source: true
+          show_root_heading: true

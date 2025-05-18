@@ -1,5 +1,5 @@
 <h1 align="center">
-Pytest Streaming
+test Pytest Streaming
 </h1>
 
 <p align="center">
@@ -12,10 +12,12 @@ Augmenting and simplifying the flow of testing streaming applications including 
 
 <div align="center">
 
+[![semantic-release: python](https://img.shields.io/badge/semantic--release-python-43e143?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pytest-streaming)
 [![Tests](https://github.com/nachatz/pytest-streaming/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/test.yml)
 [![Formatting](https://github.com/nachatz/pytest-streaming/actions/workflows/fmt.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/fmt.yml)
 [![Typing](https://github.com/nachatz/pytest-streaming/actions/workflows/mypy.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/mypy.yml)
-[![Docs](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yaml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yaml)
+[![Docs](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yml/badge.svg?branch=main)](https://github.com/nachatz/pytest-streaming/actions/workflows/deploy_docs.yml)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 </div>

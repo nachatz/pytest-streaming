@@ -52,3 +52,9 @@ just check
 ```
 
 All tests, formatting, and linting should pass before you begin development or submit a pull request.
+
+## Running the documentation site
+
+```shell
+just docs
+```

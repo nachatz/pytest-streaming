@@ -14,7 +14,7 @@ pip install pytest-streaming
 
 Detailed specifications and usage can be found here
 
-- [Pulsar](./pulsar.md)
+- [Pulsar](./pulsar/usage.md)
 - [Pubsub](./pubsub.md)
 
 &#160;
