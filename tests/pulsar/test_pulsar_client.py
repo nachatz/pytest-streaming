@@ -28,7 +28,7 @@ class TestAdminClient:
         pulsar_admin_client: AdminClient,
         pulsar_client: PulsarClientWrapper,
     ) -> None:
-        topic = PulsarTopicName.ADMIN_CLIENT_TOPIC_CREATE
+        topic = PulsarTopicName.ADMIN_CLIENT_TOPIC_CREATE_ONE
         pulsar_client._create_topic(
             topic_name=topic, tenant=Defaults.PULSAR_TENANT.value, namespace=Defaults.PULSAR_NAMESPACE.value
         )

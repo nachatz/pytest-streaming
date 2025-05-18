@@ -5,6 +5,8 @@ from httpx import QueryParams
 from httpx import Response
 from pulsar import Client as PulsarClient  # type: ignore[import-untyped]
 
+from pytest_streaming.pulsar._models import TopicName
+
 
 class AdminClient(HttpxClient):
     USER_AGENT: str = "pytest-streaming"
@@ -99,5 +101,5 @@ class PulsarClientWrapper(PulsarClient):  # type: ignore[misc]
             self.client.delete_topic(topic_name=topic, tenant=tenant, namespace=namespace)
 
     def _create_topic(self, topic_name: str, tenant: str, namespace: str) -> None:
-        topic = f"persistent://{tenant}/{namespace}/{topic_name}"
-        self.create_producer(topic)
+        topic = TopicName(topic_name=topic_name, tenant=tenant, namespace=namespace)
+        self.create_producer(topic.long)

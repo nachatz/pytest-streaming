@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from enum import StrEnum
+from functools import cached_property
 from typing import Generator
 from typing import cast
 
@@ -32,13 +33,21 @@ class PulsarMarker(BaseMarker):
     It ensures the specified tenant and namespace exist before creating topics.
     By default, topics are recreated if they already exist.
 
-    Required Parameters:
+    Attributes:
+        - marker_name (str): name of the marker
+        - marker_description (str): description of the marker
         - topics (list[str]): A list of Pulsar topic names to create.
-
-    Optional Parameters:
         - delete_after (bool): If True, the topics will be deleted after the test. (default: False)
         - service_url (str): The Pulsar service URL. (default: from pytest.ini or Defaults.PULSAR_SERVICE_URL)
         - admin_url (str): The pulsar admin URL (default: from pytest.ini or Defaults.PULSAR_ADMIN_URL)
+
+    Required Parameters:
+        - topics (list[str])
+
+    Optional Parameters:
+        - delete_after (bool)
+        - service_url (str)
+        - admin_url (str)
 
     Example:
         ```python
@@ -99,6 +108,10 @@ class PulsarMarker(BaseMarker):
             raise ValueError("Invalid specification for admin_url (str)")  # pragma: no cover
         return admin_url
 
+    @cached_property
+    def _pulsar_client(self) -> PulsarClientWrapper:
+        return PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
+
     @contextmanager
     def impl(self) -> Generator[None, None, None]:
         """Creates and optionally deletes Pulsar topics for tests with the pulsar marker."""
@@ -106,9 +119,8 @@ class PulsarMarker(BaseMarker):
             yield
             return
 
-        client = PulsarClientWrapper(service_url=self.service_url, admin_url=self.admin_url)
         try:
-            client.setup_testing_topics(
+            self._pulsar_client.setup_testing_topics(
                 tenant=self._tenant,
                 namespace=self._namespace,
                 topics=self.topics,
@@ -117,10 +129,10 @@ class PulsarMarker(BaseMarker):
             yield
 
             if self.delete_after:
-                client.delete_testing_topics(
+                self._pulsar_client.delete_testing_topics(
                     tenant=self._tenant,
                     namespace=self._namespace,
                     topics=self.topics,
                 )
         finally:
-            client.close()
+            self._pulsar_client.close()

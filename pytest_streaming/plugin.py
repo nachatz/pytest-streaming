@@ -13,6 +13,7 @@ from pytest_streaming.pubsub.markers import PubsubMarker
 from pytest_streaming.pubsub.plugin import pubsub_addoption
 from pytest_streaming.pubsub.plugin import pubsub_sessionfinish
 from pytest_streaming.pubsub.plugin import pubsub_sessionstart
+from pytest_streaming.pulsar.fixtures import *  # noqa: F403
 from pytest_streaming.pulsar.markers import PulsarMarker
 from pytest_streaming.pulsar.plugin import pulsar_addoption
 from pytest_streaming.pulsar.plugin import pulsar_sessionfinish
