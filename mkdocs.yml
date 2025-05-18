@@ -19,7 +19,12 @@ nav:
 - Home: index.md
 - Usage:
   - Getting Started: usage/getting_started.md
-  - Pulsar: usage/pulsar.md
+  - Pulsar:
+    - Usage: usage/pulsar/usage.md
+    - Setup: usage/pulsar/setup.md
+    - Markers: usage/pulsar/markers.md
+    - Fixtures: usage/pulsar/fixtures.md
+    - Global (integration tests): usage/pulsar/global.md
   - Pubsub: usage/pubsub.md
 - Contributing:
   - Contributing: contributing/contributing.md

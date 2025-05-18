@@ -14,4 +14,7 @@ class PulsarTopicName(StrEnum):
     MARKER_TOPIC_DELETE_ONE = "pytest-streaming-pulsar-marker-delete-topic-1"
     MARKER_TOPIC_DELETE_TWO = "pytest-streaming-pulsar-marker-delete-topic-2"
 
-    ADMIN_CLIENT_TOPIC_CREATE = "pytest-streaming-pulsar-admin-create-topic-1"
+    ADMIN_CLIENT_TOPIC_CREATE_ONE = "pytest-streaming-pulsar-admin-create-topic-1"
+
+    FIXTURE_MARKER_TOPIC_ONE = "pytest-streaming-pulsar-fixture-marker-topic-1"
+    FIXTURE_MARKER_TOPIC_TWO = "pytest-streaming-pulsar-fixture-marker-topic-2"
