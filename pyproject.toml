@@ -3,7 +3,7 @@ Repository = "https://github.com/nachatz/pytest-streaming"
 
 [project]
 name = "pytest-streaming"
-version = "1.2.0"
+version = "1.1.0"
 description = "Plugin for testing pubsub, pulsar, and kafka systems with pytest locally and in ci/cd"
 readme = "README.md"
 authors = [{ name = "Nikolas Achatz", email = "nil@gmail.com" }]
@@ -33,7 +33,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mkdocs>=1.6.1",
+    "mkdocs>=1.6.0",
     "mkdocs-material>=9.6.9",
     "mypy>=1.15.0",
     "pytest-env>=1.1.5",
@@ -60,8 +60,6 @@ build-backend = "hatchling.build"
 include = [
     "/pytest_streaming",
 ]
-
-
 
 [tool.coverage.run]
 source = ["pytest_streaming"]
