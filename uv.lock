@@ -1356,7 +1356,7 @@ dev = [
     { name = "coverage", specifier = ">=7.7.1" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "mdformat", specifier = ">=0.7.22" },
-    { name = "mkdocs", specifier = ">=1.6.0" },
+    { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-material", specifier = ">=9.6.9" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "mypy", specifier = ">=1.15.0" },

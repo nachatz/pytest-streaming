@@ -33,7 +33,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mkdocs>=1.6.0",
+    "mkdocs>=1.6.1",
     "mkdocs-material>=9.6.9",
     "mypy>=1.15.0",
     "pytest-env>=1.1.5",
