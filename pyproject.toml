@@ -64,6 +64,11 @@ include = [
     "/pytest_streaming",
 ]
 
+[tool.hatch.build.targets.wheel]
+include = [
+    "pytest_streaming/py.typed",
+]
+
 [tool.coverage.run]
 source = ["pytest_streaming"]
 omit = ["config.py"]
