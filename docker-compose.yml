@@ -7,7 +7,7 @@ services:
       PUBSUB_PROJECT_ID: pytest-streaming
       PUBSUB_EMULATOR_HOST: localhost:8432
   pulsar:
-    image: apachepulsar/pulsar:4.0.4@sha256:6d0c56c38c42059262bfc7f5048da8dd2a0988cc28653054c289581c297a86cd
+    image: apachepulsar/pulsar:4.0.5@sha256:f433c810f09fb8aaf9b00b0357737348a225e74487993fcc0df8ef4b58a61eda
     container_name: pulsar
     ports: ['6650:6650', '8080:8080']
     environment:
