@@ -3,7 +3,7 @@ Repository = "https://github.com/nachatz/pytest-streaming"
 
 [project]
 name = "pytest-streaming"
-version = "1.2.1"
+version = "1.2.2"
 description = "Plugin for testing pubsub, pulsar, and kafka systems with pytest locally and in ci/cd"
 readme = "README.md"
 authors = [{ name = "Nikolas Achatz", email = "nil@gmail.com" }]
