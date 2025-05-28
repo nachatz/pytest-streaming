@@ -57,6 +57,7 @@ def streaming_pulsar_client(streaming_pulsar_marker: PulsarMarker) -> Generator[
     try:
         yield client
     finally:
+        client.close()
         del client
 
 
@@ -87,6 +88,7 @@ def streaming_pulsar_consumer(
     try:
         yield consumer
     finally:
+        consumer.close()
         del consumer
 
 
@@ -128,4 +130,5 @@ def streaming_pulsar_producers(
         yield producers
     finally:
         for _, producer in producers.items():
+            producer.close()
             del producer
