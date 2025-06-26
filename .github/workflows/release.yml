@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: 18
-    - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2
+    - uses: jdx/mise-action@5cb1df66ed5e1fb3c670ea0b62fd17a76979826a # v2
       with:
         cache: true
     - name: Dependency cache
