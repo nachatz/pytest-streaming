@@ -18,7 +18,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
-        node-version: 18
+        node-version: 22
     - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2
       with:
         cache: true
