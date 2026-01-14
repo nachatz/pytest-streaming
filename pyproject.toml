@@ -26,7 +26,7 @@ classifiers = [
 dependencies = [
     "google-cloud-pubsub>=2.29.0",
     "httpx>=0.28.1",
-    "pulsar-client>=3.5.0",
+    "pulsar-client>=3.9.0",
     "pytest>=8.3.5",
     "types-protobuf>=5.29.1.20250315",
 ]
@@ -39,6 +39,7 @@ dev = [
     "pytest-env>=1.1.5",
     "pytest-mock>=3.14.0",
     "pytest-timeout>=2.3.1",
+    "pytest-asyncio>=0.25.3",
     "ruff>=0.11.2",
     "coverage>=7.7.1",
     "pydantic-settings>=2.9.1",

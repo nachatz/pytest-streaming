@@ -29,6 +29,8 @@ def test_pulsar_topics(streaming_pulsar_marker: PulsarMarker):
 
 Yields a raw Pulsar client, configured using the service URL from the current marker or global configuration. The client is automatically cleaned up after the test completes.
 
+**Type:** `pulsar.Client`
+
 **Usage Example:**
 
 ```python
@@ -37,6 +39,22 @@ from pulsar import Client
 @pytest.mark.pulsar(topics=["topic-a"])
 def test_pulsar_client(streaming_pulsar_client: Client):
     assert isinstance(streaming_pulsar_client, Client)
+```
+
+## async_streaming_pulsar_client
+
+Yields an async Pulsar client, configured using the service URL from the current marker or global configuration. The client is automatically cleaned up after the test completes.
+
+**Type:** `pulsar.asyncio.Client`
+
+**Usage Example:**
+
+```python
+from pulsar.asyncio import Client as AsyncClient
+
+@pytest.mark.pulsar(topics=["topic-a"])
+async def test_async_pulsar_client(async_streaming_pulsar_client: AsyncClient):
+    assert isinstance(async_streaming_pulsar_client, AsyncClient)
 ```
 
 ## streaming_pulsar_consumer
@@ -56,6 +74,23 @@ def test_pulsar_consumer(streaming_pulsar_consumer: Consumer):
     msg = streaming_pulsar_consumer.receive()
 ```
 
+## async_streaming_pulsar_consumer
+
+Yields an async Pulsar consumer, subscribed to the topics specified in the marker. Each consumer is given a unique subscription name for the test. Cleanup is handled automatically.
+
+**Type:** `pulsar.asyncio.Consumer`
+
+**Usage Example:**
+
+```python
+from pulsar.asyncio import Consumer as AsyncConsumer
+
+@pytest.mark.pulsar(topics=["topic-a"])
+async def test_async_pulsar_consumer(async_streaming_pulsar_consumer: AsyncConsumer):
+    print(async_streaming_pulsar_consumer.subscription_name)
+    msg = await async_streaming_pulsar_consumer.receive()
+```
+
 ## streaming_pulsar_producers
 
 Yields a dictionary mapping topic names to Pulsar producer instances, one for each topic specified in the marker. All producers are cleaned up after the test.
@@ -73,6 +108,27 @@ def test_pulsar_producers(streaming_pulsar_producers: dict[str, Producer]):
     producer_b = streaming_pulsar_producers["topic-b"]
     producer_a.send(...)
     producer_b.send(...)
+```
+
+These fixtures can be used independently or together, depending on the needs of your test. They abstract away the boilerplate of Pulsar client and resource management, allowing you to focus on your test logic.
+
+## async_streaming_pulsar_producers
+
+Yields a dictionary mapping topic names to async Pulsar producer instances, one for each topic specified in the marker. All producers are cleaned up after the test.
+
+**Type:** `dict[str, pulsar.asyncio.Producer]`
+
+**Usage Example:**
+
+```python
+from pulsar.asyncio import Producer as AsyncProducer
+
+@pytest.mark.pulsar(topics=["topic-a", "topic-b"])
+async def test_async_pulsar_producers(async_streaming_pulsar_producers: dict[str, AsyncProducer]):
+    producer_a = async_streaming_pulsar_producers["topic-a"]
+    producer_b = async_streaming_pulsar_producers["topic-b"]
+    await producer_a.send(...)
+    await producer_b.send(...)
 ```
 
 These fixtures can be used independently or together, depending on the needs of your test. They abstract away the boilerplate of Pulsar client and resource management, allowing you to focus on your test logic.
