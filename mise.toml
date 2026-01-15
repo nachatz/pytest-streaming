@@ -2,4 +2,4 @@
 python = "3.13"
 uv = "latest"
 just = "latest"
-yamlfmt = "0.17.2"
+yamlfmt = "0.21.0"
