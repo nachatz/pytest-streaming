@@ -1,6 +1,6 @@
 services:
   pubsub-emulator:
-    image: google/cloud-sdk:latest@sha256:6ed0726e30dad03044dd6a4a70d8a3e57b87d6a0be88c72d7d146ea2219c22a7
+    image: google/cloud-sdk:latest@sha256:d6d0bfb55788c8af9b354cdb6af3e3cfbc5bec59f708c0b1e38d91a5c8be2d44
     command: gcloud beta emulators pubsub start --project=pytest-streaming --host-port=0.0.0.0:8432
     ports: ['8432:8432']
     environment:
