@@ -1,5 +1,5 @@
 [tools]
-python = "3.13"
+python = "3.14.2"
 uv = "latest"
 just = "latest"
 yamlfmt = "0.21.0"
